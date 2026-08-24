@@ -1,0 +1,23 @@
+# Legacy URLs that must keep working after the rebuild.
+#
+# Each entry generates a small page at `from` that sends visitors to `to`. The
+# page carries a canonical link pointing at the real target, so search engines
+# credit that page rather than indexing a duplicate, and the redirect pages are
+# themselves kept out of sitemap.xml.
+#
+#   from  path under the site root. A trailing slash means a directory, so
+#         `website/` produces website/index.html.
+#   to    path under the site root, relative to it — normally a real page.
+#
+# These cannot be true 301s: GitHub Pages serves static files and has no way to
+# set response headers. A meta refresh plus canonical is the closest equivalent
+# and is treated as a redirect by every major search engine.
+
+- from: website/
+  to: en/index.html
+
+# Examples for the old flat URLs, if you want them:
+# - from: cv.html
+#   to: en/cv.html
+# - from: research-it.html
+#   to: it/research.html

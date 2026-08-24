@@ -32,7 +32,7 @@ const langMeta = Object.fromEntries(langConfig.map(l => [l.code, l]));
 // Used for sitemap.xml and robots.txt. Set SITE_URL in CI, or edit this.
 // Must be the full public URL of the site root, with a trailing slash.
 const siteUrl = (process.env.SITE_URL ||
-  'https://giancarloantonucci.github.io/website/').replace(/\/?$/, '/');
+  'https://giancarloantonucci.github.io/').replace(/\/?$/, '/');
 
 // Order matters: this drives the nav bar, left to right.
 const navOrder = ['index', 'research', 'collaborations', 'cv', 'notebook'];
@@ -500,6 +500,47 @@ fs.writeFileSync(
 </html>
 `
 );
+
+// --- Legacy redirects --------------------------------------------------------
+
+const redirectsPath = path.join(sourceDirectory, 'data', 'redirects.yml');
+const redirects = fs.existsSync(redirectsPath)
+  ? yaml.load(fs.readFileSync(redirectsPath, 'utf-8')) || []
+  : [];
+
+redirects.forEach(rule => {
+  const from = rule.from.replace(/^\/+/, '');
+  const outPath = from.endsWith('/') || from === ''
+    ? path.join(buildDirectory, from, 'index.html')
+    : path.join(buildDirectory, from);
+
+  // Link relatively so the page works on any host, and canonically in full so
+  // search engines are told which URL is the real one.
+  const rel = path
+    .relative(path.dirname(outPath), path.join(buildDirectory, rule.to))
+    .split(path.sep)
+    .join('/');
+  const canonical = `${siteUrl}${rule.to}`;
+
+  fs.ensureDirSync(path.dirname(outPath));
+  fs.writeFileSync(
+    outPath,
+    `<!DOCTYPE html>
+<html lang="${defaultLanguage}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=${rel}">
+  <link rel="canonical" href="${canonical}">
+  <title>G. A. Antonucci</title>
+</head>
+<body>
+  <p><a href="${rel}">Continue to the site</a></p>
+</body>
+</html>
+`
+  );
+  console.log(`Redirect: /${from} -> /${rule.to}`);
+});
 
 // --- sitemap.xml, robots.txt, 404.html ---------------------------------------
 
