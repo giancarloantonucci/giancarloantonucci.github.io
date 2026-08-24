@@ -1,0 +1,217 @@
+# The CV is maintained here and nowhere else. Both language versions of
+# /cv.html are generated from this file. Titles of theses, papers and posts
+# stay in their original language, as is normal on an academic CV; only the
+# section headings and connective words are translated (see build.js).
+
+# PDF versions, listed at the top of the CV page in this order. Each link only
+# appears if its file is actually in src/assets/pdfs/, so you can ship one
+# before the other without a dead link. `key` picks the label out of ui.yml
+# (cvDownloads), which is translated for every language.
+downloads:
+  - file: industry.pdf
+    key: industry
+  - file: academic.pdf
+    key: academic
+
+contact:
+  - label: Email
+    text: giancarlo.antonucci@ukaea.uk
+    url: mailto:giancarlo.antonucci@ukaea.uk
+  - label: GitHub
+    text: github.com/giancarloantonucci
+    url: https://github.com/giancarloantonucci
+  - label: ORCiD
+    text: orcid.org/0000-0002-8213-4568
+    url: https://orcid.org/0000-0002-8213-4568
+  - label: LinkedIn
+    text: linkedin.com/in/giancarloantonucci
+    url: https://www.linkedin.com/in/giancarloantonucci
+
+sections:
+  - id: experience
+    entries:
+      - title: Computational Scientist
+        org: UKAEA
+        from: "2022.09"
+        to: present
+        notes: ["Culham, England, United Kingdom"]
+      - title: Retained Lecturer
+        org: Jesus College
+        from: "2022.01"
+        to: "2022.06"
+        notes: ["Oxford, England, United Kingdom"]
+      - title: College Tutor
+        org: St Anne's College
+        from: "2019.10"
+        to: "2020.06"
+        notes: ["Oxford, England, United Kingdom"]
+      - title: Teaching Assistant & Tutor
+        org: University of Oxford
+        from: "2018.10"
+        to: "2019.10"
+        notes: ["Oxford, England, United Kingdom"]
+      - title: Researcher
+        org: UKAEA
+        from: "2018.07"
+        to: "2018.10"
+        notes: ["Culham, England, United Kingdom"]
+      - title: Researcher
+        org: DSTL
+        from: "2018.04"
+        to: "2018.07"
+        notes: ["Porton Down, England, United Kingdom"]
+      - title: Co-Founder & R&D Director
+        org: Natwork
+        from: "2017.11"
+        to: "2019.04"
+        notes: ["Turin, Italy"]
+      - title: Intern
+        org: Albright IP Ltd
+        from: "2016.11"
+        to: "2016.12"
+        notes: ["Cheltenham, England, United Kingdom"]
+      - title: Teaching Assistant
+        org: Turin Polytechnic University
+        from: "2015.10"
+        to: "2016.06"
+        notes: ["Turin, Italy"]
+
+  - id: education
+    entries:
+      - title: DPhil (PhD) in Applied Mathematics
+        org: University of Oxford
+        from: "2017"
+        to: "2025"
+        notes:
+          - Centre for Doctoral Training in Industrially Focused Mathematical Modelling
+          - "Thesis: <i>Solving Chaotic ODEs with Time-Parallel Algorithms</i>"
+      - title: MSc in Mathematical Modelling and Scientific Computing
+        org: University of Oxford
+        from: "2016"
+        to: "2017"
+        notes:
+          - "Thesis: <i>Iterative Solution of Evolutionary PDEs via All-at-Once Methods</i>"
+      - title: BEng in Physical Engineering
+        org: Turin Polytechnic University
+        from: "2013"
+        to: "2016"
+        notes:
+          - "Thesis: <i>Application of the Numerov Algorithm to the Hartree Model for the Helium Atom</i>"
+
+  - id: publications
+    entries:
+      - title: Finite-Time Convergence Guarantees for Time-Parallel Algorithms
+        from: "2026"
+        status: in_preparation
+      - title: A Moving-Window Algorithm for the Time Parallelization of Chaotic Systems
+        from: "2026"
+        status: in_preparation
+      - title: Estimating the Risk of Satellite Collisions in Densely Populated Orbit Shells
+        from: "2020"
+        doi: 10.33774/miir-2021-v0g46
+      - title: Multispectral Snapshot Demosaicing via Non-Convex Matrix Completion
+        from: "2019"
+        doi: 10.1109/DSW.2019.8755561
+      - title: Limits on Simultaneous Transmit and Receive
+        from: "2019"
+        doi: 10.33774/miir-2022-zhvsw
+      - title: Evaluation of the Accuracy of a Computer-Vision Based Crowd Monitoring System
+        from: "2018"
+        url: https://miis.maths.ox.ac.uk/miis/755/
+        url_text: miis.maths.ox.ac.uk/miis/755
+
+  - id: talks
+    entries:
+      - title: 14th Workshop on Parallel-in-Time (PinT) Integration
+        from: "2025"
+        badge: invited
+        notes: ["Edinburgh, Scotland, United Kingdom"]
+      - title: European Study Group with Industry (ESGI) 162
+        from: "2020"
+        notes: ["Leeds, England, United Kingdom"]
+      - title: 8th Workshop on Parallel-in-Time (PinT) Integration
+        from: "2019"
+        badge: invited
+        notes: ["Bielefeld, Germany"]
+      - title: European Study Group with Industry (ESGI) 145
+        from: "2019"
+        notes: ["Cambridge, England, United Kingdom"]
+      - title: European Study Group with Industry (ESGI) 138
+        from: "2018"
+        notes: ["Bath, England, United Kingdom"]
+      - title: UK Graduate Modelling Camp
+        from: "2018"
+        notes: ["Oxford, England, United Kingdom"]
+
+  - id: awards
+    entries:
+      - title: ESGI 162 Best Student Contribution Prize
+        from: "2020"
+      - title: St Anne's Graduate Development Scholarship
+        from: "2019"
+      - title: St Anne's Graduate Student Travel Grant
+        from: "2019"
+      - title: 8th PinT Workshop Travel Grant
+        from: "2019"
+      - title: IMA Best Presentation Prize
+        from: "2018"
+      - title: EPSRC InFoMM CDT Scholarship
+        from: "2017"
+      - title: Anne Cobbe Memorial Fund Award
+        from: "2017"
+
+  - id: schools
+    entries:
+      - title: Oxford Machine Learning Summer School
+        org: University of Oxford
+        from: "2025"
+      - title: Summer School in Plasma Physics
+        org: UKAEA
+        from: "2022"
+      - title: Oxford Summer School in Economic Networks
+        org: University of Oxford
+        from: "2017"
+      - title: Summer School in MATLAB for Scientific and Parallel Computing
+        org: University of Palermo
+        from: "2015"
+      - title: Summer School in Machine Learning and Big Data Analysis
+        org: University of Palermo
+        from: "2015"
+
+  - id: teaching
+    entries:
+      - title: St Anne's College
+        from: "2019"
+        to: "2020"
+        notes:
+          - Tutor — Calculus of Variations
+          - Tutor — Special Relativity
+          - Tutor — Numerical Analysis
+          - Tutor — Quantum Theory
+          - Tutor — Constructive Mathematics
+          - Tutor — Continuous Mathematics
+          - Teaching Assistant — Introductory Calculus
+          - Teaching Assistant — Geometry
+      - title: University of Oxford
+        from: "2018"
+        to: "2020"
+        notes:
+          - Tutor — Numerical Linear Algebra
+          - Teaching Assistant — Finite Element Method for Partial Differential Equations
+          - Teaching Assistant — Numerical Solution of Differential Equations I
+      - title: Turin Polytechnic University
+        from: "2015"
+        to: "2016"
+        notes:
+          - Teaching Assistant — Numerical Calculus and Scientific Computing
+          - Teaching Assistant — Modelling and Numerical Methods
+          - Teaching Assistant — Mathematical Analysis II
+          - Teaching Assistant — Linear Algebra and Geometry
+          - Teaching Assistant — Mathematical Analysis I
+
+  - id: skills
+    entries:
+      - title: Languages
+        notes: ["Italian (native), English (C2)"]
+      - title: Programming
+        notes: ["Julia, Python, C/C++, Fortran, Matlab, LaTeX, HTML, CSS"]

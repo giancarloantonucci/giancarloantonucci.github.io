@@ -1,206 +1,1236 @@
-html, body, h1, h2, h3, p {
-  margin: 0;
-  padding: 0;
+/* Self-hosted so they can be preloaded and subset. Bodoni Moda and EB Garamond
+   are variable and instanced to the weights each actually uses; IBM Plex Mono
+   is static at two weights. All SIL OFL 1.1 — licences alongside.
+   Sophonetica is your own face: render.js rewrites the canIPA characters into
+   the Private Use Area, so the <canipa> rule below is what makes them show. */
+
+@font-face {
+  font-family: 'Bodoni Moda';
+  src: url('fonts/BodoniModa-Roman.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
 }
 
-body {
-  display: flex;
-  flex-direction: column;
-  font-family: "Bodoni 06", serif;
-  background-color: #FFFFFF;
+@font-face {
+  font-family: 'Bodoni Moda';
+  src: url('fonts/BodoniModa-Italic.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
 }
 
-h1 {
-  font-family: "Bodoni 72", serif;
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('fonts/EBGaramond-Roman.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  src: url('fonts/EBGaramond-Italic.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('fonts/IBMPlexMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('fonts/IBMPlexMono-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 
-h2 {
-  font-family: "Bodoni 48", serif;
-  font-weight: 560;
-  font-style: normal;
-}
-
-h2 {
-  font-family: "Bodoni 36", serif;
-  font-weight: 520;
-  font-style: normal;
-}
-
-h4 {
-  font-family: "Bodoni 24", serif;
-  font-weight: 480;
-  font-style: italic;
-}
-
-h5 {
-  font-family: "Bodoni 16", serif;
-  font-weight: 440;
-  font-style: italic;
-}
-
-h6 {
-  font-family: "Bodoni 11", serif;
+/* IBM Plex Mono ships no Greek — and the Julia snippet on the Bohm page uses
+   σ. Source Code Pro is kept purely as the next link in the mono chain so that
+   character stays monospaced. It only downloads on pages that need it. */
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('fonts/SourceCodePro-Regular.woff2') format('woff2');
   font-weight: 400;
-  font-style: italic;
+  font-style: normal;
+  font-display: swap;
 }
 
-.navbar {
-  position: fixed;
-  width: 100%;
-  height: 48px;
-  background-color: #333333;
+@font-face {
+  font-family: 'Sophonetica';
+  src: url('fonts/Sophonetica.ttf') format('truetype');
+  font-display: swap;
 }
 
-.navbar a {
-  float: left;
-  color: #FFFFFF;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+/* ==========================================================================
+   G. A. Antonucci — personal site
+   Palette: cool plotting paper, blue-black ink, deuterium-plasma magenta.
+   ========================================================================== */
+
+:root {
+  /* Colour ---------------------------------------------------------------
+     Every value below passes 4.5:1 against --paper as text, except --glow,
+     which is reserved for the focus ring (a non-text UI component, 3:1). */
+  --paper:       #f5f6f8;
+  --panel:       #ffffff;
+  --ink:         #10151c;  /* headings                        16.9:1 */
+  --ink-body:    #1d242e;  /* running prose                   14.5:1 */
+  --slate:       #5b6675;  /* secondary text                   5.4:1 */
+  --rule:        #dfe4ea;
+  --rule-soft:   #eaeef3;
+  --plasma:      #a8175f;  /* links                            6.6:1 */
+  --plasma-deep: #7d1046;  /* link hover — darker, not lighter 9.9:1 */
+  --glow:        #e23a93;  /* focus ring only                  3.7:1 */
+
+  /* Syntax colours and image treatment are tokens too, so a theme is defined
+     entirely by this list and nothing else needs a dark variant. */
+  --code-comment:  #5b6675;
+  --code-punct:    #55617a;
+  --code-number:   #a8175f;
+  --code-string:   #1f6f52;
+  --code-keyword:  #2c4b8f;
+  --code-function: #7d1046;
+  --img-filter: none;
+
+  /* Type -----------------------------------------------------------------
+     One family. font-optical-sizing is auto by default, so the opsz axis
+     follows font-size without any manual family switching. */
+  /* Bodoni for display, Source Serif for reading, Source Code Pro for code.
+     The last two are an Adobe superfamily, so text and code share proportions
+     while the didone stays clearly apart from both. */
+  --font-display: 'Bodoni Moda', Didot, Georgia, serif;
+  --font-text: 'EB Garamond', Garamond, 'Palatino Linotype', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Source Code Pro', ui-monospace, SFMono-Regular,
+               Menlo, Consolas, monospace;
+
+  --text-2xs:  0.7rem;    /* mono chrome: eyebrow, footer, menu button */
+  --text-xs:   0.72rem;   /* mono data: dates, badges */
+  --text-ui:   1rem;       /* nav links, menu items */
+  --text-sm:   1.02rem;   /* captions */
+  --text-note: 1.08rem;   /* secondary prose: CV notes, tables */
+  --text-base: 1.3rem;    /* body */
+  --text-h3:   1.08rem;   /* sub-headings */
+  --text-cv:   1.18rem;   /* CV section headings */
+  --text-md:   1.32rem;   /* prose section headings */
+  --text-lg:   clamp(2rem, 5.5vw, 2.9rem);    /* page titles */
+  --text-xl:   clamp(1.85rem, 8vw, 3.6rem);   /* the name */
+
+  /* Space — a single scale. Nothing off-scale anywhere below. */
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: 1rem;
+  --s5: 1.5rem;
+  --s6: 2rem;
+  --s7: 3rem;
+  --s8: 4.5rem;
+
+  --measure: 42rem;
+  --radius: 3px;
+
+  /* Bodoni's opsz axis controls contrast, not size: LOW values are drawn with
+     thicker hairlines because they must survive small settings, HIGH values
+     are hair-thin display cuts. Left on auto, a 58px title lands near opsz 44
+     and the thin strokes disappear. Pinning it low keeps the sturdier drawing
+     at any size. Raise it for more contrast, lower it for less. */
+  --display-opsz: 11;
 }
 
-.dropdown {
-  float: right;
-  overflow: hidden;
-}
-
-.dropdown .dropdown-button {
-  cursor: pointer;
-  border: none;
-  outline: none;
-  color: #FFFFFF;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-  padding: 14px 16px;
-}
-
-.navbar a:hover,
-.dropdown:hover .dropdown-button,
-.dropdown-button:focus {
-  background-color: #FF0000;
-  color: black;
-}
-
-.navbar a:hover {
-  height: 20px;
-}
-
-.dropdown:hover .dropdown-button,
-.dropdown-button:focus {
-  height: 48px;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #F9F9F9;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  width: 60px;
-}
-
-.dropdown-content a {
-  float: none;
-  color: #000000;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-  width: 100%;
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-.dropdown-content a:hover {
-  background-color: #DDD;
-  height: 49px;
+html {
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light dark;
 }
 
-.show {
-  display: block;
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--paper);
+  color: var(--ink-body);
+  font-family: var(--font-text);
+  font-size: var(--text-base);
+  line-height: 1.62;
+  hyphens: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-.language-flag {
-  width: 30px;
-  vertical-align: middle;
-}
+/* --- Skip link ----------------------------------------------------------- */
 
-header, main, footer {
-  line-height: 1.6;
-}
-
-header {
-  padding: 70px 20px 0;
-}
-
-main {
-  padding: 0 20px 50px;
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 5px 20px;
-  background-color: #333;
-  color: white;
-}
-
-.content-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.content {
-  max-width: 800px;
-  margin-top: 0;
-}
-
-.content h1 {
-  margin-bottom: 20px;
-}
-
-.content h2 {
-  margin-bottom: 15px;
-}
-
-.content h3 {
-  margin-bottom: 10px;
-}
-
-.content p,
-.content ol,
-.content ul {
-  text-align: justify;
-  margin-bottom: 10px;
-}
-
-.profile-picture {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto 20px;
-  border: 2px solid #333;
-}
-
-.social-icon i {
-  margin: 20px 10px;
-}
-
-a {
-  color: #1561ad;
+.skip-link {
+  position: absolute;
+  inset-inline-start: -9999px;
+  inset-block-start: 0;
+  z-index: 100;
+  padding: var(--s2) var(--s4);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   text-decoration: none;
 }
 
-a:hover {
-  color: #1eaedb;
+.skip-link:focus {
+  inset-inline-start: var(--s2);
+  inset-block-start: var(--s2);
+}
+
+/* --- Navigation ---------------------------------------------------------- */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  padding: 0 var(--s4);
+  min-height: 3.5rem;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-link {
+  position: relative;
+  flex: 0 0 auto;
+  padding: var(--s2) var(--s3);
+  color: var(--slate);
+  font-size: var(--text-ui);
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: color 140ms ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: var(--s3);
+  inset-block-end: var(--s1);
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--ink);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-link.is-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.nav-link.is-current::after {
+  background: var(--plasma);
+  transform: scaleX(1);
+}
+
+/* --- Language switch ----------------------------------------------------- */
+
+.dropdown {
+  position: relative;
+}
+
+.nav-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  margin-inline-start: auto;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s2);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  color: var(--slate);
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--rule);
+}
+
+.theme-toggle svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* Show the icon for the theme the button would switch TO. */
+.theme-toggle .icon-dark { display: none; }
+:root[data-theme='dark'] .theme-toggle .icon-dark { display: block; }
+:root[data-theme='dark'] .theme-toggle .icon-light { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-toggle .icon-dark { display: block; }
+  :root:not([data-theme='light']) .theme-toggle .icon-light { display: none; }
+}
+
+.dropdown-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  padding: var(--s2) var(--s3);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  color: var(--slate);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.dropdown-button:hover,
+.dropdown-button[aria-expanded="true"] {
+  color: var(--ink);
+  border-color: var(--rule);
+}
+
+.dropdown-button .caret {
+  width: 0.5rem;
+  height: 0.5rem;
+  transition: transform 180ms ease;
+}
+
+.dropdown-button[aria-expanded="true"] .caret {
+  transform: rotate(180deg);
+}
+
+.dropdown-content {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: calc(100% + var(--s2));
+  min-width: 11rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: var(--s1);
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px -12px rgba(16, 21, 28, 0.28);
+  display: none;
+}
+
+.dropdown-content.is-open {
+  display: block;
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  padding: var(--s2) var(--s3);
+  border-radius: var(--radius);
+  color: var(--slate);
+  font-size: 0.98rem;
+  text-decoration: none;
+}
+
+.lang-option:hover,
+.lang-option:focus-visible {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.lang-name {
+  /* Keeps a right-to-left name from reordering anything around it. */
+  unicode-bidi: isolate;
+}
+
+.lang-option.is-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.language-flag {
+  filter: var(--img-filter);
+  flex: 0 0 auto;
+  width: 1.4rem;
+  height: calc(1.4rem * 0.75);   /* the flags are 4:3 */
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--rule);
+}
+
+/* Languages with no flag keep the names aligned with those that have one. */
+.language-flag.is-empty {
+  display: inline-block;
+  width: 1.4rem;
+  box-shadow: none;
+}
+
+.post-flag-text {
+  display: inline-block;
+  min-width: 1.15rem;
+  color: var(--slate);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* --- Layout -------------------------------------------------------------- */
+
+.content-wrapper {
+  max-width: calc(var(--measure) + var(--s6));
+  margin: 0 auto;
+  padding: var(--s7) var(--s4) var(--s8);
+}
+
+.content {
+  max-width: var(--measure);
+}
+
+/* --- Masthead ------------------------------------------------------------ */
+
+.masthead {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s5);
+  margin-bottom: var(--s7);
+}
+
+.masthead-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.masthead h1 {
+  font-family: var(--font-display);
+  margin: 0;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: var(--text-xl);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  margin: 0 0 var(--s7);
+  color: var(--ink);
+  font-weight: 500;
+  font-size: var(--text-lg);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.eyebrow {
+  display: block;
+  margin-top: var(--s3);
+  color: var(--slate);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.portrait {
+  filter: var(--img-filter);
+  flex: 0 0 auto;
+  /* The name is two lines of --text-xl at line-height 1.04, so 2.08em of it.
+     Sizing the portrait from the same token keeps the two exactly level at
+     every viewport width, including through the clamp. */
+  width: calc(var(--text-xl) * 2.08);
+  height: calc(var(--text-xl) * 2.08);
+  margin: 0;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--rule);
+}
+
+/* Everything set in Bodoni takes the pinned optical size. Only opsz is named
+   here, so font-weight still drives the wght axis normally. */
+.masthead h1,
+.page-title,
+.prose > h2,
+.prose > h3,
+.cv-section h2 {
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' var(--display-opsz);
+}
+
+/* --- Prose --------------------------------------------------------------- */
+
+.prose > h2 {
+  font-family: var(--font-display);
+  margin: var(--s7) 0 var(--s3);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: var(--text-md);
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.prose > h2:first-child {
+  margin-top: 0;
+}
+
+.prose > h3 {
+  font-family: var(--font-display);
+  margin: var(--s6) 0 var(--s2);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: var(--text-h3);
+}
+
+.prose p {
+  margin: 0 0 var(--s4);
+}
+
+.prose ul,
+.prose ol {
+  margin: 0 0 var(--s5);
+  padding-inline-start: var(--s5);
+}
+
+.prose li {
+  margin-bottom: var(--s1);
+}
+
+.prose a {
+  color: var(--plasma);
+  overflow-wrap: break-word;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 0.08em);
+  transition: color 140ms ease, background-size 180ms ease;
+}
+
+/* Hover darkens. Going lighter would drop contrast below 4.5:1. */
+.prose a:hover,
+.prose a:focus-visible {
+  color: var(--plasma-deep);
+  background-size: 100% 2px;
+}
+
+.prose blockquote {
+  margin: var(--s5) 0;
+  padding-inline-start: var(--s4);
+  border-inline-start: 2px solid var(--rule);
+  color: var(--slate);
+  font-style: italic;
+}
+
+.prose code {
+  padding: 0.1em 0.35em;
+  background: var(--rule-soft);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+}
+
+.prose pre {
+  margin: var(--s5) 0;
+  padding: var(--s4);
+  overflow-x: auto;
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+
+.draft-banner {
+  margin: 0 0 var(--s5);
+  padding: var(--s3) var(--s4);
+  border: 1px dashed var(--plasma);
+  border-radius: var(--radius);
+  color: var(--plasma);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+}
+
+.empty-note {
+  padding: var(--s5) 0;
+  color: var(--slate);
+  font-style: italic;
+}
+
+/* --- Figures and tables --------------------------------------------------- */
+
+.prose figure {
+  margin: var(--s6) 0;
+}
+
+/* Figures are line art drawn in black on a transparent ground, so they need a
+   light surface under them in both themes rather than any colour filtering. */
+.prose figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: var(--s3);
+  background: #fff;
+  border-radius: var(--radius);
+}
+
+.prose figcaption {
+  margin-top: var(--s3);
+  color: var(--slate);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.table-scroll {
+  margin: var(--s6) 0;
+  overflow-x: auto;
+}
+
+.vocoid-table,
+.data-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--text-note);
+}
+
+.vocoid-table th,
+.vocoid-table td,
+.data-table th,
+.data-table td {
+  padding: var(--s2) var(--s3);
+  border: 1px solid var(--rule);
+  text-align: center;
+}
+
+.data-table td {
+  text-align: start;
+  vertical-align: top;
+}
+
+.vocoid-table thead th,
+.vocoid-table tbody th,
+.data-table thead th {
+  color: var(--slate);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.vocoid-table caption,
+.data-table caption {
+  caption-side: bottom;
+  margin-top: var(--s3);
+  color: var(--slate);
+  font-size: var(--text-sm);
+  text-align: start;
+}
+
+/* Display maths can be wider than the measure; scroll rather than overflow. */
+.math,
+mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--s1) 0;
+}
+
+
+canipa {
+  font-family: 'Sophonetica', var(--font-text);
+  font-style: normal;
+}
+
+/* --- Code ------------------------------------------------------------------
+   Prism's stock theme ships its own font stack, its own background and a set
+   of syntax colours that clash with this palette. These rules come after it in
+   the cascade and pull it back onto the site's own tokens. */
+
+.prose pre[class*="language-"],
+.prose code[class*="language-"] {
+  /* Prism's theme hard-codes black here, which vanishes on a dark panel. */
+  color: var(--ink-body);
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  line-height: 1.6;
+  text-shadow: none;
+  tab-size: 2;
+  hyphens: none;
+}
+
+/* Prism paints a translucent white background behind operators, entities and
+   urls — invisible on a light page, a row of glowing boxes on a dark one. */
+.prose pre[class*="language-"] .token,
+.prose code[class*="language-"] .token {
+  background: none;
+  text-shadow: none;
+}
+
+.prose pre[class*="language-"] {
+  margin: var(--s5) 0;
+  padding: var(--s4);
+  background: var(--panel);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+.token.punctuation,
+.token.operator {
+  color: var(--code-punct);
+}
+
+.token.number,
+.token.boolean,
+.token.constant,
+.token.symbol {
+  color: var(--code-number);
+}
+
+.token.string,
+.token.char,
+.token.attr-value {
+  color: var(--code-string);
+}
+
+.token.keyword,
+.token.selector,
+.token.important,
+.token.atrule {
+  color: var(--code-keyword);
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: var(--code-function);
+}
+
+.token.variable,
+.token.property,
+.token.tag {
+  color: var(--ink-body);
+}
+
+/* --- Maths -----------------------------------------------------------------
+   MathJax's SVG output draws its own glyph outlines, so nothing is downloaded
+   and no font stack applies. Its TeX face descends from Monotype Modern, a
+   didone — which is why it sits comfortably beside Bodoni rather than
+   fighting it. These rules only fix colour and overflow. */
+
+mjx-container[display="true"] {
+  margin: var(--s5) 0;
+}
+
+mjx-container svg {
+  color: var(--ink);
+}
+
+/* --- CV ------------------------------------------------------------------- */
+
+.cv-profile {
+  margin: 0 0 var(--s7);
+  color: var(--slate);
+}
+
+.cv-download {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s5);
+  /* The links are small mono text and the heading below carries a rule, which
+     pulls the eye downwards — so this needs more air than a plain block gap. */
+  margin: 0 0 var(--s8);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cv-section {
+  margin-bottom: var(--s7);
+}
+
+.cv-section h2 {
+  font-family: var(--font-display);
+  margin: 0 0 var(--s5);
+  padding-bottom: var(--s2);
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: var(--text-cv);
+}
+
+/* Space between entries is several times the space inside one, so each entry
+   reads as a single block rather than as loose lines.
+
+   align-items: baseline lines up the first baseline of the date with the first
+   baseline of the entry, whatever the two faces' metrics happen to be. A
+   padding nudge would have to be retuned every time a font or size changes —
+   and silently goes wrong when it isn't. */
+.cv-entry {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0 var(--s5);
+  margin-bottom: var(--s5);
+  align-items: baseline;
+}
+
+.cv-dates {
+  color: var(--slate);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.cv-heading {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.cv-role {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.cv-org {
+  color: var(--slate);
+}
+
+.cv-org::before {
+  content: "· ";
+}
+
+.cv-badge {
+  margin-inline-start: var(--s1);
+  color: var(--plasma);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cv-notes {
+  margin: var(--s1) 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--slate);
+  font-size: var(--text-note);
+  line-height: 1.6;
+}
+
+.cv-references {
+  margin-top: var(--s6);
+  padding-top: var(--s4);
+  border-top: 1px solid var(--rule);
+  color: var(--slate);
+  font-size: var(--text-note);
+}
+
+/* --- Post index ----------------------------------------------------------- */
+
+.post-list {
+  margin: 0 0 var(--s6);
+  padding: 0;
+  list-style: none;
+}
+
+/* Title and date share a baseline; the flags are images, which have no useful
+   baseline of their own, so they opt out and centre instead. */
+.post-list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s3);
+  padding: var(--s3) 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+/* These links live inside .prose, which paints a gradient underline on every
+   anchor. The titles keep it; the flags must not have one, and neither should
+   get a second line from text-decoration on top. */
+.post-title {
+  color: var(--plasma);
+  text-decoration: none;
+}
+
+.post-title:hover,
+.post-title:focus-visible {
+  color: var(--plasma-deep);
+  text-decoration: none;
+}
+
+.prose .post-flag {
+  background-image: none;
+}
+
+.post-langs {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: var(--s1);
+}
+
+.post-flag {
+  display: inline-flex;
+  padding: 2px;
+  border-radius: 2px;
+  opacity: 0.45;
+  transition: opacity 140ms ease;
+}
+
+.post-flag img {
+  display: block;
+  width: 0.95rem;
+  height: calc(0.95rem * 0.75);
+  object-fit: cover;
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px var(--rule);
+}
+
+.post-flag:hover,
+.post-flag:focus-visible,
+.post-flag.is-current {
+  opacity: 1;
+}
+
+.post-date {
+  margin-inline-start: auto;
+  color: var(--slate);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Contact row ---------------------------------------------------------- */
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s5);
+  margin-top: var(--s7);
+  padding-top: var(--s4);
+  border-top: 1px solid var(--rule);
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  color: var(--slate);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 140ms ease;
+}
+
+.contact-link svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: currentColor;
+}
+
+.contact-link:hover,
+.contact-link:focus-visible {
+  color: var(--plasma);
+}
+
+/* --- Footer --------------------------------------------------------------- */
+
+.site-footer {
+  max-width: calc(var(--measure) + var(--s6));
+  margin: 0 auto;
+  padding: var(--s4) var(--s4) var(--s7);
+  border-top: 1px solid var(--rule);
+  color: var(--slate);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+}
+
+
+/* --- Scripts ---------------------------------------------------------------
+   Latin and Greek are covered by the bundled faces. Han, kana and Arabic are
+   not: a subsetted CJK web font still runs to megabytes, so those scripts fall
+   through to the reader's system fonts, which are good and already installed.
+
+   Note the ordering. font-family is resolved per character, not per element,
+   so the Latin faces stay FIRST and the system font is appended. Bodoni has no
+   Arabic or Han glyphs, so those characters fall through to it — while Latin
+   text on the same page (the name in the masthead, "UKAEA", a DOI) still gets
+   Bodoni and Source Serif. Replacing the stack instead of extending it puts
+   Latin headings in a system sans. */
+
+:lang(zh-Hans),
+:lang(ja) {
+  --font-display: 'Bodoni Moda', 'Hiragino Mincho ProN', 'Yu Mincho', 'Songti SC',
+                  'Noto Serif CJK SC', 'Source Han Serif SC', serif;
+  --font-text: 'Source Serif 4', 'Hiragino Mincho ProN', 'Yu Mincho', 'Songti SC',
+               'Noto Serif CJK SC', 'Source Han Serif SC', 'Microsoft YaHei', serif;
+  --font-mono: 'Source Code Pro', 'Hiragino Mincho ProN', 'Songti SC', monospace;
+  hyphens: none;
+}
+
+:lang(ar) {
+  --font-display: 'Bodoni Moda', 'SF Arabic', 'Geeza Pro', 'Noto Naskh Arabic',
+                  'Amiri', 'Traditional Arabic', serif;
+  --font-text: 'Source Serif 4', 'SF Arabic', 'Geeza Pro', 'Noto Naskh Arabic',
+               'Amiri', 'Traditional Arabic', serif;
+  --font-mono: 'Source Code Pro', 'SF Arabic', 'Geeza Pro', 'Noto Naskh Arabic',
+               monospace;
+  hyphens: none;
+  line-height: 1.9;
+}
+
+/* Tracked labels lose their tracking on Arabic, Han and kana pages, for two
+   different reasons.
+
+   Arabic is cursive: letters join, and letter-spacing prises those joins apart
+   into stretched, broken words.
+
+   Han and kana don't join, but these labels are set in a monospace face that
+   has no CJK glyphs, so the characters fall through to a system serif — and
+   tracking designed for small Latin caps leaves that fallback looking loose
+   and unevenly spaced against the Latin around it. (text-transform: uppercase
+   is simply inert for all three scripts; it is left alone because the Latin
+   runs inside these labels — UKAEA, CV, DOI — still need it.) */
+
+:is(:lang(ar), :lang(zh-Hans), :lang(ja))
+  :is(.eyebrow, .dropdown-button, .contact-link, .site-footer, .cv-dates,
+      .cv-badge, .cv-download, .post-date, .post-flag-text,
+      .vocoid-table thead th, .data-table thead th) {
+  letter-spacing: normal;
+}
+
+/* Han and kana have no spaces to break at and no hyphenation; let the browser
+   break between characters the way those scripts expect. */
+:lang(zh-Hans),
+:lang(ja) {
+  line-break: strict;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Arabic numerals in a right-to-left run still read left-to-right. */
+[dir="rtl"] .cv-dates,
+[dir="rtl"] .post-date {
+  direction: ltr;
+  text-align: end;
+}
+
+[dir="rtl"] .dropdown-button .caret,
+[dir="rtl"] .contact-link svg {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .dropdown-button[aria-expanded="true"] .caret {
+  transform: scaleX(-1) rotate(180deg);
+}
+
+/* --- Focus + motion ------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--glow);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Narrow screens --------------------------------------------------------
+   One breakpoint. Everything above is fluid or scale-based, so re-tuning the
+   two scale tokens cascades through the whole page. */
+
+@media (max-width: 40rem) {
+  :root {
+    --text-base: 1.2rem;
+    --text-md: 1.2rem;
+    --s7: 2.25rem;
+    --s8: 3rem;
+  }
+
+  body {
+    line-height: 1.68;
+  }
+
+  .navbar {
+    min-height: 3.25rem;
+    padding: 0 var(--s3);
+  }
+
+  .nav-link {
+    padding: var(--s3) var(--s2);
+    font-size: 0.82rem;
+  }
+
+  .nav-link::after {
+    inset-inline: var(--s2);
+  }
+
+  .masthead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s4);
+  }
+
+  .portrait {
+    width: 6.5rem;
+    height: 6.5rem;
+  }
+
+  .cv-entry {
+    grid-template-columns: 1fr;
+    gap: var(--s1) 0;
+  }
+}
+
+
+/* --- Dark mode -------------------------------------------------------------
+   A theme is nothing but the token list below; every rule in this file is
+   written against those tokens, so there are no other dark-specific rules.
+
+   Two selectors, one list. The media query is what the reader's system asks
+   for, and it stands down when they have explicitly chosen light. The
+   attribute is what the toggle in the navbar sets, and it wins either way.
+
+   On a dark ground the link hover goes LIGHTER; darkening it, as light mode
+   does, would sink it into the page. Every value checked at 4.5:1 against the
+   dark paper (3:1 for the focus ring, a UI component rather than text). */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper:       #12161c;
+    --panel:       #181d25;
+    --ink:         #eef2f7;  /* headings                    16.1:1 */
+    --ink-body:    #d6dde6;  /* running prose               13.3:1 */
+    --slate:       #98a4b4;  /* secondary text               7.2:1 */
+    --rule:        #2b323d;
+    --rule-soft:   #212832;
+    --plasma:      #f07fae;  /* links                        7.2:1 */
+    --plasma-deep: #f9a9c8;  /* link hover — lighter here   10.0:1 */
+    --glow:        #ff5fa8;  /* focus ring                   6.4:1 */
+
+    --code-comment:  #8794a6;
+    --code-punct:    #9aa7bb;
+    --code-number:   #f08fb8;
+    --code-string:   #7fd0a6;
+    --code-keyword:  #8fb4f0;
+    --code-function: #f9a9c8;
+
+    /* Photographs and flags are lit for a white page; knock back the glare.
+       Figures are NOT filtered — see .prose figure img. */
+    --img-filter: brightness(0.9) contrast(1.02);
+  }
+}
+
+:root[data-theme='dark'] {
+    --paper:       #12161c;
+    --panel:       #181d25;
+    --ink:         #eef2f7;  /* headings                    16.1:1 */
+    --ink-body:    #d6dde6;  /* running prose               13.3:1 */
+    --slate:       #98a4b4;  /* secondary text               7.2:1 */
+    --rule:        #2b323d;
+    --rule-soft:   #212832;
+    --plasma:      #f07fae;  /* links                        7.2:1 */
+    --plasma-deep: #f9a9c8;  /* link hover — lighter here   10.0:1 */
+    --glow:        #ff5fa8;  /* focus ring                   6.4:1 */
+
+    --code-comment:  #8794a6;
+    --code-punct:    #9aa7bb;
+    --code-number:   #f08fb8;
+    --code-string:   #7fd0a6;
+    --code-keyword:  #8fb4f0;
+    --code-function: #f9a9c8;
+
+    /* Photographs and flags are lit for a white page; knock back the glare.
+       Figures are NOT filtered — see .prose figure img. */
+    --img-filter: brightness(0.9) contrast(1.02);
+}
+
+/* --- Print ---------------------------------------------------------------- */
+
+@media print {
+  .navbar,
+  .skip-link,
+  .contact,
+  .cv-download {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    font-size: 10pt;
+  }
+
+  .cv-section {
+    break-inside: avoid;
+  }
+
+  .prose a,
+  .post-title {
+    color: var(--ink);
+  }
 }

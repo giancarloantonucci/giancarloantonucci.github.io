@@ -1,42 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{langTag}}" dir="{{dir}}">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/assets/styles.css">
-  <link rel="stylesheet" href="https://indestructibletype.com/fonts/Bodoni/Bodoni.css" type="text/css" charset="utf-8" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <title>G. A. Antonucci – {{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{description}}">
+  <title>G. A. Antonucci — {{title}}</title>
+  <link rel="preload" href="{{assets}}/fonts/EBGaramond-Roman.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{assets}}/fonts/BodoniModa-Roman.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{assets}}/styles.css">
+  <script>
+    // Runs before paint so a stored choice doesn't flash the other theme.
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  {{alternates}}
+  {{head}}
 </head>
 <body>
-  <div class="navbar">
-    <a href="index.html">{{homeLabel}}</a>
-    <a href="research.html">{{researchLabel}}</a>
-    <a href="notebook.html">{{notebookLabel}}</a>
-    <div class="dropdown">
-      <button class="dropdown-button" onclick="toggleDropdown()">
-        &#127757 <i class="fa fa-caret-down"></i>
+  <a class="skip-link" href="#main">{{skip}}</a>
+
+  <nav class="navbar">
+    <div class="nav-links">
+        {{nav}}
+    </div>
+    <div class="nav-tools">
+      <button class="theme-toggle" type="button" aria-label="{{themeLabel}}" title="{{themeLabel}}">
+        <svg class="icon-light" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 110-10 5 5 0 010 10zm0-13.2a1 1 0 01-1-1V1a1 1 0 012 0v1.8a1 1 0 01-1 1zm0 18.4a1 1 0 01-1-1V19.4a1 1 0 012 0v1.8a1 1 0 01-1 1zM3.8 12a1 1 0 01-1 1H1a1 1 0 010-2h1.8a1 1 0 011 1zm18.4 0a1 1 0 01-1 1h-1.8a1 1 0 010-2H21a1 1 0 011 1zM5.6 5.6a1 1 0 01-1.4 0L3 4.4A1 1 0 014.4 3l1.2 1.2a1 1 0 010 1.4zm13.8 13.8a1 1 0 01-1.4 0l-1.2-1.2a1 1 0 011.4-1.4l1.2 1.2a1 1 0 010 1.4zM4.2 19.4a1 1 0 010-1.4l1.2-1.2a1 1 0 011.4 1.4l-1.2 1.2a1 1 0 01-1.4 0zM17.2 6.4a1 1 0 010-1.4L18.4 3.8A1 1 0 0119.8 5.2l-1.2 1.2a1 1 0 01-1.4 0z"/></svg>
+        <svg class="icon-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A9 9 0 1110.8 3a7 7 0 1010.2 10.2z"/></svg>
       </button>
-      <div id="language-selector" class="dropdown-content">
-        <a {{existsEnPath}} href="{{enPath}}">
-          <img src="/assets/images/english-flag.svg" alt="English Flag" class="language-flag">
-        </a>
-        <a {{existsItPath}} href="{{itPath}}">
-          <img src="/assets/images/italian-flag.svg" alt="Italian Flag" class="language-flag">
-        </a>
+    <div class="dropdown">
+      <button class="dropdown-button" type="button" aria-expanded="false" aria-controls="language-selector">
+        <span>{{language}}</span>
+        <svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0l5 6 5-6z" fill="currentColor"/></svg>
+      </button>
+      <div id="language-selector" class="dropdown-content" role="menu" aria-label="{{switchLabel}}">
+        {{languageOptions}}
       </div>
     </div>
-  </div>
+    </div>
+  </nav>
+
   <div class="content-wrapper">
     <header class="content">
-      <h1>{{title}}</h1>
+      <h1 class="page-title">{{title}}</h1>
     </header>
-    <main class="content">
-      {{renderedContent}}
+
+    <main class="content" id="main">
+      <div class="prose">
+        {{renderedContent}}
+      </div>
     </main>
   </div>
-  <footer>
-    &copy; 2023 Giancarlo Antonino Antonucci
+
+  <footer class="site-footer">
+    © {{year}} Giancarlo Antonino Antonucci
   </footer>
-  <script src="/assets/js/dropdown.js"></script>
+
+  {{inlineScript}}
 </body>
 </html>

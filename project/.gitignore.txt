@@ -1,4 +1,4 @@
 node_modules/
-project/build/
+build/
 .DS_Store
 *.log

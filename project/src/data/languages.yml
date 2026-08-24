@@ -1,0 +1,89 @@
+# The site's languages, in the order the switcher lists them.
+#
+#   code   folder name under src/pages/<slug>/ and the URL segment
+#   name   how the language names itself — this is what the switcher shows
+#   tag    BCP 47, used for lang="" and hreflang. Not always the same as code.
+#   dir    ltr (default) or rtl
+#   script only when the text needs a font the Latin faces don't cover
+#   flag   optional, a file in src/assets/images/flags/. Pluricentric languages
+#          use a diagonally split pair (NW-SE cut, first-named on top).
+#          Omit it and the
+#          language shows its name alone — nothing breaks. Flags name places,
+#          not languages, so only add one where the mapping is a real choice
+#          you're happy to defend.
+#
+# Adding a language here makes it available everywhere; pages appear in the nav
+# and the switcher only where a matching <code>.md actually exists, so a
+# language with two translated pages shows exactly those two.
+
+- code: en
+  name: English
+  tag: en
+  flag: en.svg
+
+- code: zh
+  name: 普通话
+  tag: zh-Hans
+  script: han
+  flag: zh.svg
+
+- code: es
+  name: Español
+  tag: es
+  flag: es.svg
+
+# Not a country flag: Arabic spans two dozen states and no one of them owns
+# it. This is the letter ḍād, after لغة الضاد — the language of the ḍād.
+- code: ar
+  name: العربية
+  tag: ar
+  dir: rtl
+  script: arabic
+  flag: ar.svg
+
+- code: ja
+  name: 日本語
+  tag: ja
+  script: jpan
+  flag: jp.svg
+
+- code: sw
+  name: kiSwahili
+  tag: sw
+  flag: sw.svg
+
+- code: it
+  name: Italiano
+  tag: it
+  flag: it.svg
+
+- code: el
+  name: Ελληνικά
+  tag: el
+  flag: gr.svg
+
+
+- code: scn
+  name: Sicilianu
+  tag: scn
+  flag: scn.svg
+
+- code: mt
+  name: Malti
+  tag: mt
+  flag: mt.svg
+
+- code: pms
+  name: Piemontèis
+  tag: pms
+  flag: pms.svg
+
+# Greko — Calabrian Greek, of the Bovesìa. (Not Griko, the Salentine variety.)
+# Italiot Greek has no ISO 639-3 code, so bare "itg" would be invalid BCP 47 and
+# search engines discard hreflang values they cannot parse. el-IT-x-itg is the
+# valid form: Greek, in Italy, private-use subtag itg. Add Griko later as
+# el-IT-x-grk and the two stay distinct.
+- code: itg
+  name: Γκραίκο
+  tag: el-IT-x-itg
+  flag: itg.svg

@@ -1,18 +1,20 @@
 {
   "name": "website",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Personal academic website \u2014 bilingual static site generator",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node project/build.js",
+    "serve": "npx --yes http-server project/build -p 3000 -c-1",
+    "start": "npm run build && npm run serve"
   },
   "keywords": [],
-  "author": "",
+  "author": "Giancarlo Antonino Antonucci",
   "license": "ISC",
   "dependencies": {
-    "fs-extra": "^11.1.1",
+    "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
-    "markdown-it": "^13.0.1",
-    "markdown-it-attrs": "^4.1.6"
+    "js-yaml": "^4.1.0",
+    "markdown-it": "^15.0.0"
   }
 }
