@@ -501,6 +501,48 @@ fs.writeFileSync(
 `
 );
 
+// --- Post media --------------------------------------------------------------
+// Anything that is not a .md or _page.yml inside a page folder is that page's
+// own media. It is copied once to build/media/<slug>/ — once, not per language,
+// since the same figure serves every translation. Keeping it beside the page
+// means deleting or renaming the page takes its images with it; a shared
+// folder lets images outlive their owner unnoticed.
+
+function pageMediaDir(slug) {
+  return path.join(pagesDirectory, slug, 'media');
+}
+
+function copyPageMedia() {
+  const used = new Set();
+  const present = [];
+
+  pageSlugs().forEach(slug => {
+    const dir = pageMediaDir(slug);
+    if (!fs.existsSync(dir)) return;
+
+    fs.copySync(dir, path.join(buildDirectory, 'media', slug));
+
+    fs.readdirSync(dir).forEach(file => present.push(`${slug}/${file}`));
+
+    // Which of them does the page's markdown actually reference?
+    languages.forEach(language => {
+      const page = loadPage(slug, language);
+      if (!page) return;
+      fs.readdirSync(dir).forEach(file => {
+        if (page.content.includes(file)) used.add(`${slug}/${file}`);
+      });
+    });
+  });
+
+  const orphans = present.filter(f => !used.has(f));
+  if (orphans.length) {
+    console.log('\nUnreferenced media (nothing links to these):');
+    orphans.forEach(f => console.log(`  src/pages/${f.replace('/', '/media/')}`));
+  }
+}
+
+copyPageMedia();
+
 // --- Legacy redirects --------------------------------------------------------
 
 const redirectsPath = path.join(sourceDirectory, 'data', 'redirects.yml');

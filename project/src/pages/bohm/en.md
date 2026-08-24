@@ -43,7 +43,7 @@ where $p_i = -i\hbar\grad_i$ denotes the momentum ascribed to the coordinates of
 \end{equation}
 </div>
 
-An immediate consequence of \eqref{eq:guidance} is that quantum trajectories do not cross each other: if they had, two particles would have shared the same point, making the wave function multi-valued at that point.
+An immediate consequence of $\eqref{eq:guidance}$ is that quantum trajectories do not cross each other: if they had, two particles would have shared the same point, making the wave function multi-valued at that point.
 
 ## The double-slit experiment
 
@@ -97,7 +97,7 @@ solution = solve(problem, solver)
 As it turns out, the slits cause the guiding wave to form an interference pattern, which in turn determines the possible trajectories of each particle.
 
 <figure>
-  <img src="../assets/images/figures/double-slit.svg" alt="Particle trajectories and the resulting distribution for the double-slit experiment">
+  <img src="../media/bohm/double-slit.svg" alt="Particle trajectories and the resulting distribution for the double-slit experiment" loading="lazy" decoding="async" width="432" height="288">
   <figcaption><b>Figure 1.</b> Left: particle trajectories for the double-slit experiment. Right: (non-normalised) quantum equilibrium distribution at the photographic plate.</figcaption>
 </figure>
 

@@ -29,7 +29,7 @@ The vocoids articulable in the human oral tract are set out in the vowel quadril
 ## Intonation
 
 <figure>
-  <img src="../assets/images/figures/intonation.svg" alt="Diagram of the protune and tune of an intonation contour">
+  <img src="../media/canipa/intonation.svg" alt="Diagram of the protune and tune of an intonation contour" loading="lazy" decoding="async" width="377" height="93">
   <figcaption><b>Figure 1.</b> The structure of an intonation contour.</figcaption>
 </figure>
 
@@ -50,6 +50,6 @@ The vocoids articulable in the human oral tract are set out in the vowel quadril
 ### British English
 
 <figure>
-  <img src="../assets/images/figures/british-intonation.svg" alt="Intonation contours for British English">
+  <img src="../media/canipa/british-intonation.svg" alt="Intonation contours for British English" loading="lazy" decoding="async" width="587" height="258">
   <figcaption><b>Figure 2.</b> Intonation contours for British English.</figcaption>
 </figure>

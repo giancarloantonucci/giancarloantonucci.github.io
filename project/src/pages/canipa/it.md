@@ -47,7 +47,7 @@ I vocoidi articolabili nel tratto orale umano sono rappresentati nel quadrilater
 ## L'intonazione
 
 <figure>
-  <img src="../assets/images/figures/intonation.svg" alt="Schema del protono e del tono di un contorno intonativo">
+  <img src="../media/canipa/intonation.svg" alt="Schema del protono e del tono di un contorno intonativo" loading="lazy" decoding="async" width="377" height="93">
   <figcaption><b>Figura 1.</b> La struttura di un contorno intonativo.</figcaption>
 </figure>
 
