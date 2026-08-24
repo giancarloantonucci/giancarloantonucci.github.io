@@ -1,4 +1,0 @@
-node_modules/
-project/build/
-.DS_Store
-*.log
