@@ -2,7 +2,7 @@
 title: Research
 ---
 
-I work at the [Culham Centre for Fusion Energy (CCFE)](https://www.ccfe.ac.uk/), the UK's national laboratory for fusion research. I develop and analyse algorithms and software for the time-parallelisation of plasma physics simulations.
+I work at the [UKAEA](https://www.ukaea.org), the UK's national laboratory for fusion research. I develop and analyse algorithms and software for the time-parallelisation of plasma physics simulations.
 
 Other research interests include:
 - Numerical solutions of differential equations,

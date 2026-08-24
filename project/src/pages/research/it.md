@@ -2,7 +2,7 @@
 title: Ricerca
 ---
 
-Lavoro presso il [Culham Centre for Fusion Energy (CCFE)](https://www.ccfe.ac.uk/), il laboratorio nazionale del Regno Unito per la ricerca sulla fusione nucleare. Sviluppo e analizzo algoritmi e software per la parallelizzazione temporale delle simulazioni di fisica dei plasmi.
+Lavoro presso l’[UKAEA](https://www.ukaea.org), il laboratorio nazionale del Regno Unito per la ricerca sulla fusione nucleare. Sviluppo e analizzo algoritmi e software per la parallelizzazione temporale delle simulazioni di fisica dei plasmi.
 
 Altri interessi di ricerca includono:
 - Soluzioni numeriche di equazioni differenziali,
