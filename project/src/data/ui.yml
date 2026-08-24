@@ -13,7 +13,6 @@
   'switchLabel': 'Change language'
   'skip': 'Skip to content'
   'cvTitle': 'CV'
-  'cvDownload': 'Download as PDF'
   'cvSections':
     'contact': 'Contact'
     'experience': 'Experience'
@@ -48,7 +47,6 @@
   'switchLabel': '切换语言'
   'skip': '跳到正文'
   'cvTitle': '简历'
-  'cvDownload': '下载 PDF'
   'cvSections':
     'contact': '联系方式'
     'experience': '工作经历'
@@ -84,7 +82,6 @@
   'switchLabel': 'Cambiar idioma'
   'skip': 'Ir al contenido'
   'cvTitle': 'CV'
-  'cvDownload': 'Descargar en PDF'
   'cvSections':
     'contact': 'Contacto'
     'experience': 'Experiencia'
@@ -119,7 +116,6 @@
   'switchLabel': 'تغيير اللغة'
   'skip': 'الانتقال إلى المحتوى'
   'cvTitle': 'السيرة الذاتية'
-  'cvDownload': 'تنزيل بصيغة PDF'
   'cvSections':
     'contact': 'الاتصال'
     'experience': 'الخبرة'
@@ -154,7 +150,6 @@
   'switchLabel': '言語を切り替える'
   'skip': '本文へ移動'
   'cvTitle': '履歴'
-  'cvDownload': 'PDFをダウンロード'
   'cvSections':
     'contact': '連絡先'
     'experience': '職歴'
@@ -189,7 +184,6 @@
   'switchLabel': 'Badilisha lugha'
   'skip': 'Nenda kwenye maudhui'
   'cvTitle': 'Wasifu'
-  'cvDownload': 'Pakua kama PDF'
   'cvSections':
     'contact': 'Mawasiliano'
     'experience': 'Uzoefu wa kazi'
@@ -225,7 +219,6 @@
   'switchLabel': 'Αλλαγή γλώσσας'
   'skip': 'Μετάβαση στο περιεχόμενο'
   'cvTitle': 'Βιογραφικό'
-  'cvDownload': 'Λήψη σε PDF'
   'cvSections':
     'contact': 'Επικοινωνία'
     'experience': 'Εμπειρία'
@@ -260,7 +253,6 @@
   'switchLabel': 'Cambia lingua'
   'skip': 'Vai al contenuto'
   'cvTitle': 'CV'
-  'cvDownload': 'Scarica in PDF'
   'cvSections':
     'contact': 'Contatti'
     'experience': 'Esperienze lavorative'
@@ -285,9 +277,9 @@
   'themeLabel': 'Cambia tema'
 'scn':
   'nav':
-    'index': 'Principiu'
+    'index': 'Accuminciu'
     'research': 'Ricerca'
-    'collaborations': 'Cullaburazzioni'
+    'collaborations': 'Cullabburazzioni'
     'cv': 'CV'
     'notebook': 'Pitazzu'
   'role': 'Ricercaturi computazionali, UKAEA'
@@ -295,7 +287,6 @@
   'switchLabel': 'Cancia lingua'
   'skip': 'Vai ô cuntinutu'
   'cvTitle': 'CV'
-  'cvDownload': 'Scàrrica ''n PDF'
   'cvSections':
     'contact': 'Cuntatti'
     'experience': 'Spirènzi di Travagghiu'
@@ -330,7 +321,6 @@
   'switchLabel': 'Ibdel il-lingwa'
   'skip': 'Mur għall-kontenut'
   'cvTitle': 'CV'
-  'cvDownload': 'Niżżel bħala PDF'
   'cvSections':
     'contact': 'Kuntatt'
     'experience': 'Esperjenza'
@@ -357,17 +347,16 @@
   '_REVIEW': 'Nav labels, "Blog" and "CV" are taken from your own index-pms.html. Everything else is my
     draft, built by analogy — have a speaker check it.'
   'nav':
-    'index': 'Pàgina Principal'
-    'research': 'Arserca'
+    'index': 'Comens'
+    'research': 'Arsërca'
     'collaborations': 'Colaborassion'
     'cv': 'CV'
-    'notebook': 'Blog'
+    'notebook': 'Scartari'
   'role': 'Ricercador computassional, UKAEA'
   'empty': 'A-i é ancora gnente sì. Nòte e scrit a rivran an sta pàgina apopré ch''a son pront.'
   'switchLabel': 'Cambia lenga'
   'skip': 'Va al contnù'
   'cvTitle': 'CV'
-  'cvDownload': 'Descarié an PDF'
   'cvSections':
     'contact': 'Contat'
     'experience': 'Esperiense ëd travaj'
@@ -402,7 +391,6 @@
   'switchLabel': 'Change language'
   'skip': 'Skip to content'
   'cvTitle': 'CV'
-  'cvDownload': 'Download as PDF'
   'cvSections':
     'contact': 'Contact'
     'experience': 'Experience'

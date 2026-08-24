@@ -370,6 +370,121 @@ function render(templateName, placeholders) {
 
 // ---------------------------------------------------------------------------
 
+// --- Validation --------------------------------------------------------------
+// ui.yml holds labels for identifiers defined elsewhere: nav slugs and post
+// sections live in this file, CV section ids and download keys live in cv.yml.
+// Nothing links the two ends, so a typo or an omission renders as an empty
+// string in one of twelve languages and is never noticed. These checks make
+// that a build failure instead.
+
+function validate() {
+  const problems = [];
+  const warnings = [];
+  const reference = strings[defaultLanguage];
+
+  // 1. Every identifier defined elsewhere needs a label, in every language.
+  const contracts = [
+    { label: 'nav', ids: navOrder, source: 'navOrder in build.js' },
+    {
+      label: 'postSections',
+      ids: postSectionOrder,
+      source: 'postSectionOrder in build.js'
+    },
+    {
+      label: 'cvSections',
+      ids: cv ? ['contact', ...cv.sections.map(s => s.id)] : [],
+      source: 'section ids in cv.yml'
+    },
+    {
+      label: 'cvDownloads',
+      ids: cv ? (cv.downloads || []).map(d => d.key) : [],
+      source: 'downloads[].key in cv.yml'
+    }
+  ];
+
+  contracts.forEach(({ label, ids, source }) => {
+    languages.forEach(language => {
+      const map = strings[language] && strings[language][label];
+      ids.forEach(id => {
+        if (!map || !map[id]) {
+          problems.push(
+            `ui.yml: ${language}.${label}.${id} is missing (id comes from ${source})`
+          );
+        }
+      });
+      // and the reverse: a label with no identifier behind it
+      Object.keys(map || {}).forEach(key => {
+        if (!ids.includes(key)) {
+          warnings.push(`ui.yml: ${language}.${label}.${key} labels nothing in ${source}`);
+        }
+      });
+    });
+  });
+
+  // 2. Every language needs the same set of keys as the default one.
+  languages.forEach(language => {
+    const block = strings[language];
+    if (!block) {
+      problems.push(`ui.yml: no block for "${language}" (listed in languages.yml)`);
+      return;
+    }
+    Object.keys(reference).forEach(key => {
+      if (key.startsWith('_')) return;
+      if (!(key in block)) problems.push(`ui.yml: ${language}.${key} is missing`);
+    });
+    // and the reverse — a key only one language has is drift, not a feature
+    Object.keys(block).forEach(key => {
+      if (key.startsWith('_')) return;
+      if (!(key in reference)) {
+        warnings.push(
+          `ui.yml: ${language}.${key} exists but ${defaultLanguage} has no such key`
+        );
+      }
+    });
+  });
+
+  // 3. Keys nothing in the codebase reads.
+  const source = fs.readFileSync(__filename, 'utf-8');
+  Object.keys(reference).forEach(key => {
+    if (key.startsWith('_')) return;
+    if (contracts.some(c => c.label === key)) return;
+    // Word boundary, or "cvDownload" matches inside "cvDownloads".
+    if (!new RegExp(`\\.${key}\\b`).test(source)) {
+      warnings.push(`ui.yml: "${key}" is defined in all languages but read by nothing`);
+    }
+  });
+
+  // 4. Every language in languages.yml needs a ui.yml block and vice versa.
+  Object.keys(strings).forEach(code => {
+    if (!languages.includes(code)) {
+      problems.push(`ui.yml has "${code}", which is not in languages.yml`);
+    }
+  });
+
+  // 5. Flags that are configured but absent.
+  langConfig.forEach(l => {
+    if (!l.flag) return;
+    const p = path.join(sourceDirectory, 'assets', 'images', 'flags', l.flag);
+    if (!fs.existsSync(p)) {
+      problems.push(`languages.yml: ${l.code} points at flags/${l.flag}, which does not exist`);
+    }
+  });
+
+  if (warnings.length) {
+    console.log('\nWarnings:');
+    [...new Set(warnings)].forEach(w => console.log(`  ${w}`));
+  }
+
+  if (problems.length) {
+    console.error('\nBuild aborted — the data files disagree:\n');
+    [...new Set(problems)].forEach(p => console.error(`  ${p}`));
+    console.error('');
+    process.exit(1);
+  }
+}
+
+validate();
+
 fs.emptyDirSync(buildDirectory);
 fs.copySync(path.join(sourceDirectory, 'assets'), path.join(buildDirectory, 'assets'));
 
