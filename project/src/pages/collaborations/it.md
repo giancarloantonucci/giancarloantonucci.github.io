@@ -1,6 +1,8 @@
 ---
-title: Collaborazioni
+title: Collaborazioni con l'industria
 ---
+
+Come dottorando presso il [Centre for Doctoral Training in Industrially Focused Mathematical Modelling](https://www.maths.ox.ac.uk/study-here/postgraduate-study/industrially-focused-mathematical-modelling-epsrc-cdt), ho collaborato con aziende per risolvere problemi legati a contesti commerciali. Collaborazioni di questo tipo sono spesso proficue sia per il partner industriale, che beneficia di sforzi e costi ridotti, sia per il matematico, che viene sfidato da interessanti quesiti di ricerca.
 
 ## Transfinite Systems
 

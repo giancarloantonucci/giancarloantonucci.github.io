@@ -105,9 +105,9 @@
   /* Bodoni for display, Source Serif for reading, Source Code Pro for code.
      The last two are an Adobe superfamily, so text and code share proportions
      while the didone stays clearly apart from both. */
-  --font-display: 'Bodoni Moda', Didot, Georgia, serif;
+  --font-display: 'Bodoni Moda', 'EB Garamond', Didot, Georgia, serif;
   --font-text: 'EB Garamond', Garamond, 'Palatino Linotype', Georgia, serif;
-  --font-mono: 'IBM Plex Mono', 'Source Code Pro', ui-monospace, SFMono-Regular,
+  --font-mono: 'IBM Plex Mono', 'Source Code Pro', 'EB Garamond', ui-monospace, SFMono-Regular,
                Menlo, Consolas, monospace;
 
   --text-2xs:  0.7rem;    /* mono chrome: eyebrow, footer, menu button */
@@ -133,7 +133,17 @@
   --s8: 4.5rem;
 
   --measure: 42rem;
+  /* Two steps, deliberately: panels and controls at --radius, small images at
+     --radius-sm. Anything else is drift. */
   --radius: 3px;
+  --radius-sm: 2px;
+
+  /* The download links sit between a large heading and a ruled section title.
+     The heading above carries leading in its line box; the small mono links
+     below carry almost none, so an equal margin reads as less space beneath
+     them than above. This is deliberately larger than the --s scale for that
+     reason, and it does not shrink on narrow screens the way --s8 does. */
+  --cv-downloads-gap: 4.5rem;
 
   /* Bodoni's opsz axis controls contrast, not size: LOW values are drawn with
      thicker hairlines because they must survive small settings, HIGH values
@@ -388,7 +398,7 @@ body {
   width: 1.4rem;
   height: calc(1.4rem * 0.75);   /* the flags are 4:3 */
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 0 0 1px var(--rule);
 }
 
@@ -479,7 +489,7 @@ body {
   height: calc(var(--text-xl) * 2.08);
   margin: 0;
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 0 0 1px var(--rule);
 }
 
@@ -561,7 +571,7 @@ body {
 .prose code {
   padding: 0.1em 0.35em;
   background: var(--rule-soft);
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: 0.78em;
 }
@@ -585,7 +595,7 @@ body {
   height: auto;
 }
 
-.draft-banner {
+.prose .draft-banner {
   margin: 0 0 var(--s5);
   padding: var(--s3) var(--s4);
   border: 1px dashed var(--plasma);
@@ -596,7 +606,7 @@ body {
   letter-spacing: 0.04em;
 }
 
-.empty-note {
+.prose .empty-note {
   padding: var(--s5) 0;
   color: var(--slate);
   font-style: italic;
@@ -780,18 +790,19 @@ mjx-container svg {
 
 /* --- CV ------------------------------------------------------------------- */
 
-.cv-profile {
+.prose .cv-profile {
   margin: 0 0 var(--s7);
   color: var(--slate);
 }
 
-.cv-download {
+/* Scoped to .prose: an unscoped .cv-download (0,1,0) loses to .prose p (0,1,1),
+   so its margin was silently replaced by the generic paragraph margin. Any
+   rule here that sets margin on a <p> inside .prose needs the same treatment. */
+.prose .cv-download {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s2) var(--s5);
-  /* The links are small mono text and the heading below carries a rule, which
-     pulls the eye downwards — so this needs more air than a plain block gap. */
-  margin: 0 0 var(--s8);
+  margin: 0 0 var(--cv-downloads-gap);
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.06em;
@@ -873,7 +884,7 @@ mjx-container svg {
   line-height: 1.6;
 }
 
-.cv-references {
+.prose .cv-references {
   margin-top: var(--s6);
   padding-top: var(--s4);
   border-top: 1px solid var(--rule);
@@ -927,7 +938,7 @@ mjx-container svg {
 .post-flag {
   display: inline-flex;
   padding: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   opacity: 0.45;
   transition: opacity 140ms ease;
 }
@@ -937,7 +948,7 @@ mjx-container svg {
   width: 0.95rem;
   height: calc(0.95rem * 0.75);
   object-fit: cover;
-  border-radius: 1px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 0 0 1px var(--rule);
 }
 
@@ -1018,7 +1029,7 @@ mjx-container svg {
 
 :lang(zh-Hans),
 :lang(ja) {
-  --font-display: 'Bodoni Moda', 'Hiragino Mincho ProN', 'Yu Mincho', 'Songti SC',
+  --font-display: 'Bodoni Moda', 'EB Garamond', 'Hiragino Mincho ProN', 'Yu Mincho', 'Songti SC',
                   'Noto Serif CJK SC', 'Source Han Serif SC', serif;
   --font-text: 'Source Serif 4', 'Hiragino Mincho ProN', 'Yu Mincho', 'Songti SC',
                'Noto Serif CJK SC', 'Source Han Serif SC', 'Microsoft YaHei', serif;
@@ -1027,7 +1038,7 @@ mjx-container svg {
 }
 
 :lang(ar) {
-  --font-display: 'Bodoni Moda', 'SF Arabic', 'Geeza Pro', 'Noto Naskh Arabic',
+  --font-display: 'Bodoni Moda', 'EB Garamond', 'SF Arabic', 'Geeza Pro', 'Noto Naskh Arabic',
                   'Amiri', 'Traditional Arabic', serif;
   --font-text: 'Source Serif 4', 'SF Arabic', 'Geeza Pro', 'Noto Naskh Arabic',
                'Amiri', 'Traditional Arabic', serif;
@@ -1082,12 +1093,39 @@ mjx-container svg {
   transform: scaleX(-1) rotate(180deg);
 }
 
+
+/* --- Pressed states ---------------------------------------------------------
+   Hover and focus were covered; :active was not. On a touchscreen there is no
+   hover at all, so without this a tap gives no feedback until the next page
+   loads. A 1px displacement reads as a physical press.
+
+   Only elements that are already flex items or flex containers are moved:
+   transform does nothing on an inline box, and forcing display on inline links
+   inside prose would break how they wrap mid-sentence. Those get a colour
+   shift instead. */
+
+.nav-link:active,
+.lang-option:active,
+.contact-link:active,
+.post-title:active,
+.post-flag:active,
+.prose .cv-download a:active,
+.dropdown-button:active,
+.theme-toggle:active {
+  transform: translateY(1px);
+}
+
+.prose p a:active,
+.prose li a:active {
+  color: var(--plasma-deep);
+}
+
 /* --- Focus + motion ------------------------------------------------------- */
 
 :focus-visible {
   outline: 2px solid var(--glow);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1110,6 +1148,7 @@ mjx-container svg {
     --text-md: 1.2rem;
     --s7: 2.25rem;
     --s8: 3rem;
+    --cv-downloads-gap: 3rem;
   }
 
   body {

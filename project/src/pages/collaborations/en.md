@@ -1,12 +1,14 @@
 ---
-title: Collaborations
+title: Collaborations with industry
 ---
+
+During my time at the [Centre for Doctoral Training in Industrially Focused Mathematical Modelling](https://www.maths.ox.ac.uk/study-here/postgraduate-study/industrially-focused-mathematical-modelling-epsrc-cdt), I worked with businesses to solve complex problems in commercial settings. These collaborations benefit both sides: companies cut operating costs and workloads, while mathematicians tackle interesting research questions.
 
 ## Transfinite Systems
 
-Transfinite Systems is a software company specialized in satellite communications and coordination. As Earth's orbit shells become more and more crowded with satellites, they are interested in understanding how the probabilities of collisions between satellites on intersecting orbits become important, as shown by the 2009 Iridium-33 crash. Updating estimates of collision probabilities is important as new deployments are authorized, but it's difficult because only limited information about the deployment is needed to obtain permission.
+Transfinite Systems develops satellite communications and coordination software. As Earth’s orbits become more crowded, the company is modelling collision risks on intersecting paths, a hazard highlighted by the 2009 Iridium-33 crash. Updating these risk estimates is difficult because regulators authorize new deployments while requiring very little data.
 
-In this study group, we demonstrated that, despite the lack of information, analytic estimates of collision probabilities relevant to the problem could be made. We carried out a survey of approaches reported in the literature, reviewing the 2009 Iridium-33 collision event. We showed how to derive a simple formula for the probability of a collision, exploiting small dimensionless numbers in the problem. We then extended our results to consider collisions involving orbits containing many satellites, aiming to find the optimal point at which to traverse such an orbit. As it turns out, there are circumstances under which, to minimize the probability of a collision, it is better not to aim to pass between the midpoint of two satellites.
+Our study group demonstrated how to make analytic collision estimates despite sparse data. After reviewing the literature on the 2009 Iridium-33 crash, we derived a simple formula for collision probability by exploiting small dimensionless numbers. We then extended this model to multi-satellite orbits to find the safest point to traverse them. Surprisingly, we found that under certain conditions, avoiding the midpoint between two satellites can minimize collision risk.
 
 ## DSTL
 

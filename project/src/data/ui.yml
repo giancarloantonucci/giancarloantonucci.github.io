@@ -15,12 +15,10 @@ en:
   nav:
     index: Home
     research: Research
-    collaborations: Collaborations
+    collaborations: Industry
     cv: CV
     notebook: Notebook
 
-  # under your name, and the meta description
-  role: Computational Scientist, UKAEA
 
   # controls: skip link, language menu, theme button
   skip: Skip to content
@@ -35,9 +33,11 @@ en:
   postSections:
     maths: Maths & physics
     linguistics: Linguistics
+    poetry: Poetry
 
   # the CV page
   cvTitle: CV
+  cvDescription: "Curriculum vitae: experience, education, publications, talks, awards and teaching. Available as an industry or academic PDF."
   cvDownloads:
     industry: Industry CV
     academic: Academic CV
@@ -62,11 +62,10 @@ zh:
   nav:
     index: 首页
     research: 研究
-    collaborations: 合作
+    collaborations: 产业
     cv: 简历
     notebook: 笔记
 
-  role: 计算科学家，UKAEA
 
   skip: 跳到正文
   switchLabel: 切换语言
@@ -78,8 +77,10 @@ zh:
   postSections:
     maths: 数学与物理
     linguistics: 语言学
+    poetry: 诗歌
 
   cvTitle: 简历
+  cvDescription: 简历：工作经历、教育背景、论文发表、会议报告、奖项与教学。提供企业版与学术版 PDF。
   cvDownloads:
     industry: 企业版简历
     academic: 学术版简历
@@ -104,11 +105,10 @@ es:
   nav:
     index: Inicio
     research: Investigación
-    collaborations: Colaboraciones
+    collaborations: Industria
     cv: CV
     notebook: Cuaderno
 
-  role: Científico computacional, UKAEA
 
   skip: Ir al contenido
   switchLabel: Cambiar idioma
@@ -120,8 +120,10 @@ es:
   postSections:
     maths: Matemáticas y física
     linguistics: Lingüística
+    poetry: Poesía
 
   cvTitle: CV
+  cvDescription: "Currículum: experiencia, formación, publicaciones, congresos, premios y docencia. Disponible en PDF para empresa o académico."
   cvDownloads:
     industry: CV para empresa
     academic: CV académico
@@ -146,11 +148,10 @@ ar:
   nav:
     index: الرئيسية
     research: البحث
-    collaborations: التعاونات
+    collaborations: الصناعة
     cv: السيرة الذاتية
     notebook: المفكرة
 
-  role: عالم حوسبة، UKAEA
 
   skip: الانتقال إلى المحتوى
   switchLabel: تغيير اللغة
@@ -162,8 +163,10 @@ ar:
   postSections:
     maths: الرياضيات والفيزياء
     linguistics: اللسانيات
+    poetry: الشعر
 
   cvTitle: السيرة الذاتية
+  cvDescription: "السيرة الذاتية: الخبرة والتعليم والمنشورات والمؤتمرات والجوائز والتدريس. متاحة بصيغة PDF للقطاع الخاص أو الأكاديمي."
   cvDownloads:
     industry: السيرة الذاتية للقطاع الخاص
     academic: السيرة الذاتية الأكاديمية
@@ -188,11 +191,10 @@ ja:
   nav:
     index: ホーム
     research: 研究
-    collaborations: 共同研究
+    collaborations: 産業
     cv: 履歴
     notebook: ノート
 
-  role: 計算科学者、UKAEA
 
   skip: 本文へ移動
   switchLabel: 言語を切り替える
@@ -204,8 +206,10 @@ ja:
   postSections:
     maths: 数学と物理
     linguistics: 言語学
+    poetry: 詩
 
   cvTitle: 履歴
+  cvDescription: 履歴書：職歴、学歴、論文、学会発表、受賞、教育歴。企業向け・研究者向けのPDFを用意しています。
   cvDownloads:
     industry: 企業向け履歴
     academic: 研究者向け履歴
@@ -230,11 +234,10 @@ sw:
   nav:
     index: Mwanzo
     research: Utafiti
-    collaborations: Ushirikiano
+    collaborations: Viwanda
     cv: Wasifu
     notebook: Daftari
 
-  role: Mwanasayansi wa kikokotozi, UKAEA
 
   skip: Nenda kwenye maudhui
   switchLabel: Badilisha lugha
@@ -246,8 +249,10 @@ sw:
   postSections:
     maths: Hisabati na fizikia
     linguistics: Isimu
+    poetry: Ushairi
 
   cvTitle: Wasifu
+  cvDescription: "Wasifu: uzoefu wa kazi, elimu, machapisho, mikutano, tuzo na ufundishaji. Unapatikana kama PDF ya kikazi au ya kitaaluma."
   cvDownloads:
     industry: Wasifu wa kikazi
     academic: Wasifu wa kitaaluma
@@ -272,11 +277,10 @@ el:
   nav:
     index: Αρχική
     research: Έρευνα
-    collaborations: Συνεργασίες
+    collaborations: Βιομηχανία
     cv: Βιογραφικό
     notebook: Σημειωματάριο
 
-  role: Υπολογιστικός επιστήμονας, UKAEA
 
   skip: Μετάβαση στο περιεχόμενο
   switchLabel: Αλλαγή γλώσσας
@@ -288,8 +292,10 @@ el:
   postSections:
     maths: Μαθηματικά και φυσική
     linguistics: Γλωσσολογία
+    poetry: Ποίηση
 
   cvTitle: Βιογραφικό
+  cvDescription: "Βιογραφικό: εμπειρία, εκπαίδευση, δημοσιεύσεις, συνέδρια, βραβεία και διδασκαλία. Διαθέσιμο σε PDF για την αγορά ή ακαδημαϊκό."
   cvDownloads:
     industry: Βιογραφικό για την αγορά
     academic: Ακαδημαϊκό βιογραφικό
@@ -314,11 +320,10 @@ it:
   nav:
     index: Inizio
     research: Ricerca
-    collaborations: Collaborazioni
+    collaborations: Industria
     cv: CV
     notebook: Quaderno
 
-  role: Ricercatore computazionale, UKAEA
 
   skip: Vai al contenuto
   switchLabel: Cambia lingua
@@ -330,8 +335,10 @@ it:
   postSections:
     maths: Matematica e fisica
     linguistics: Linguistica
+    poetry: Poesia
 
   cvTitle: CV
+  cvDescription: "Curriculum: esperienze lavorative, formazione, pubblicazioni, conferenze, premi e insegnamento. Disponibile in PDF per industria o accademia."
   cvDownloads:
     industry: CV per l'industria
     academic: CV accademico
@@ -356,11 +363,10 @@ scn:
   nav:
     index: Accuminciu
     research: Ricerca
-    collaborations: Cullabburazzioni
+    collaborations: Industria
     cv: CV
     notebook: Pitazzu
 
-  role: Ricercaturi computazionali, UKAEA
 
   skip: Vai ô cuntinutu
   switchLabel: Cancia lingua
@@ -372,8 +378,10 @@ scn:
   postSections:
     maths: Matimàtica e Fìsica
     linguistics: Linguìstica
+    poetry: Puisìa
 
   cvTitle: CV
+  cvDescription: "Curriculum: spirènzi di travagghiu, aducazzioni, pubbricazziuna, cunferenzi, premî e nzignamentu. Dispunìbbili n PDF pi l'industria o accadèmicu."
   cvDownloads:
     industry: CV pi l'industria
     academic: CV accadèmicu
@@ -398,11 +406,10 @@ mt:
   nav:
     index: Ewwel paġna
     research: Riċerka
-    collaborations: Kollaborazzjonijiet
+    collaborations: Industrija
     cv: CV
     notebook: Ktieb tan-noti
 
-  role: Xjenzat komputazzjonali, UKAEA
 
   skip: Mur għall-kontenut
   switchLabel: Ibdel il-lingwa
@@ -414,8 +421,10 @@ mt:
   postSections:
     maths: Matematika u fiżika
     linguistics: Lingwistika
+    poetry: Poeżija
 
   cvTitle: CV
+  cvDescription: "CV: esperjenza, edukazzjoni, pubblikazzjonijiet, konferenzi, premjijiet u tagħlim. Disponibbli bħala PDF għall-industrija jew akkademiku."
   cvDownloads:
     industry: CV għall-industrija
     academic: CV akkademiku
@@ -441,11 +450,10 @@ pms:
   nav:
     index: Comens
     research: Arsërca
-    collaborations: Colaborassion
+    collaborations: Industria
     cv: CV
     notebook: Scartari
 
-  role: Ricercador computassional, UKAEA
 
   skip: Va al contnù
   switchLabel: Cambia lenga
@@ -457,8 +465,10 @@ pms:
   postSections:
     maths: Matemàtica e fìsica
     linguistics: Lenghìstica
+    poetry: Poesìa
 
   cvTitle: CV
+  cvDescription: "CV: esperiense ëd travaj, formassion, publicassion, congrès, premi e ansegnament. Disponìbil an PDF për l'industria o academich."
   cvDownloads:
     industry: CV për l'industria
     academic: CV academich
@@ -484,11 +494,10 @@ itg:
   nav:
     index: Home
     research: Research
-    collaborations: Collaborations
+    collaborations: Industry
     cv: CV
     notebook: Notebook
 
-  role: Computational Scientist, UKAEA
 
   skip: Skip to content
   switchLabel: Change language
@@ -500,8 +509,10 @@ itg:
   postSections:
     maths: Maths & physics
     linguistics: Linguistics
+    poetry: Poetry
 
   cvTitle: CV
+  cvDescription: "Curriculum vitae: experience, education, publications, talks, awards and teaching. Available as an industry or academic PDF."
   cvDownloads:
     industry: Industry CV
     academic: Academic CV

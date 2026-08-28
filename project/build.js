@@ -18,6 +18,9 @@ const buildDirectory = path.join(projectDirectory, 'build');
 const templatesDirectory = path.join(sourceDirectory, 'templates');
 const pagesDirectory = path.join(sourceDirectory, 'pages');
 
+const site = yaml.load(
+  fs.readFileSync(path.join(sourceDirectory, 'data', 'site.yml'), 'utf-8')
+);
 const langConfig = yaml.load(
   fs.readFileSync(path.join(sourceDirectory, 'data', 'languages.yml'), 'utf-8')
 );
@@ -26,16 +29,14 @@ const strings = yaml.load(
 );
 
 const languages = langConfig.map(l => l.code);
-const defaultLanguage = 'en';
+const defaultLanguage = site.defaultLanguage;
 const langMeta = Object.fromEntries(langConfig.map(l => [l.code, l]));
 
 // Used for sitemap.xml and robots.txt. Set SITE_URL in CI, or edit this.
 // Must be the full public URL of the site root, with a trailing slash.
-const siteUrl = (process.env.SITE_URL ||
-  'https://giancarloantonucci.github.io/').replace(/\/?$/, '/');
+const siteUrl = (process.env.SITE_URL || site.url).replace(/\/?$/, '/');
 
-// Order matters: this drives the nav bar, left to right.
-const navOrder = ['index', 'research', 'collaborations', 'cv', 'notebook'];
+const navOrder = site.nav;
 
 
 // ---------------------------------------------------------------------------
@@ -264,7 +265,7 @@ function headAssets(data) {
 
 // --- Notebook index ----------------------------------------------------------
 
-const postSectionOrder = ['maths', 'linguistics'];
+const postSectionOrder = site.postSections;
 
 // Posts are gathered across every language, keyed by slug, so the notebook
 // lists everything that exists rather than only what has been translated.
@@ -380,15 +381,26 @@ function render(templateName, placeholders) {
 function validate() {
   const problems = [];
   const warnings = [];
+
+  // Everything below reads the default language's block as the template, so a
+  // bad defaultLanguage has to be caught here or the later checks throw a raw
+  // TypeError instead of printing a message anyone can act on.
   const reference = strings[defaultLanguage];
+  if (!reference) {
+    console.error('\nBuild aborted — the data files disagree:\n');
+    console.error(
+      `  site.yml: defaultLanguage "${defaultLanguage}" has no block in ui.yml\n`
+    );
+    process.exit(1);
+  }
 
   // 1. Every identifier defined elsewhere needs a label, in every language.
   const contracts = [
-    { label: 'nav', ids: navOrder, source: 'navOrder in build.js' },
+    { label: 'nav', ids: navOrder, source: 'nav in site.yml' },
     {
       label: 'postSections',
       ids: postSectionOrder,
-      source: 'postSectionOrder in build.js'
+      source: 'postSections in site.yml'
     },
     {
       label: 'cvSections',
@@ -421,7 +433,41 @@ function validate() {
     });
   });
 
-  // 2. Every language needs the same set of keys as the default one.
+  // 2. site.yml must name things that exist.
+  if (!languages.includes(defaultLanguage)) {
+    problems.push(
+      `site.yml: defaultLanguage "${defaultLanguage}" is not a code in languages.yml`
+    );
+  }
+  if (!/^https?:\/\//.test(site.url || '')) {
+    problems.push('site.yml: url must be a full URL including https://');
+  }
+  navOrder.forEach(slug => {
+    if (slug === 'cv') return;
+    if (!fs.existsSync(path.join(pagesDirectory, slug))) {
+      problems.push(
+        `site.yml: nav lists "${slug}", but src/pages/${slug}/ does not exist`
+      );
+    }
+  });
+  // A section nothing is filed under is fine, but worth knowing about.
+  const sectionsInUse = new Set(
+    pageSlugs().map(slug => sharedFrontMatter(slug).section).filter(Boolean)
+  );
+  postSectionOrder.forEach(id => {
+    if (!sectionsInUse.has(id)) {
+      warnings.push(`site.yml: postSections lists "${id}", which no post uses yet`);
+    }
+  });
+  sectionsInUse.forEach(id => {
+    if (!postSectionOrder.includes(id)) {
+      problems.push(
+        `a post declares section "${id}", which is not listed in site.yml postSections`
+      );
+    }
+  });
+
+  // 3. Every language needs the same set of keys as the default one.
   languages.forEach(language => {
     const block = strings[language];
     if (!block) {
@@ -443,7 +489,7 @@ function validate() {
     });
   });
 
-  // 3. Keys nothing in the codebase reads.
+  // 4. Keys nothing in the codebase reads.
   const source = fs.readFileSync(__filename, 'utf-8');
   Object.keys(reference).forEach(key => {
     if (key.startsWith('_')) return;
@@ -454,20 +500,61 @@ function validate() {
     }
   });
 
-  // 4. Every language in languages.yml needs a ui.yml block and vice versa.
+  // 5. Every language in languages.yml needs a ui.yml block and vice versa.
   Object.keys(strings).forEach(code => {
     if (!languages.includes(code)) {
       problems.push(`ui.yml has "${code}", which is not in languages.yml`);
     }
   });
 
-  // 5. Flags that are configured but absent.
+  // 6. Flags that are configured but absent.
   langConfig.forEach(l => {
     if (!l.flag) return;
     const p = path.join(sourceDirectory, 'assets', 'images', 'flags', l.flag);
     if (!fs.existsSync(p)) {
       problems.push(`languages.yml: ${l.code} points at flags/${l.flag}, which does not exist`);
     }
+  });
+
+  // Descriptions come from the page's first paragraph. A page with no prose at
+  // all yields nothing, and then the meta tag is omitted rather than emitted
+  // empty — worth knowing about, since search engines will write their own.
+  pageSlugs().forEach(slug => {
+    languages.forEach(language => {
+      if (!isPublished(language, slug)) return;
+      const page = loadPage(slug, language);
+      if (!page) return;
+
+      if (!summarise(page.content)) {
+        warnings.push(
+          `src/pages/${slug}/${language}.md has no prose, so it gets no meta description`
+        );
+      }
+
+      // Unfinished text on a page that is neither draft nor unlinked.
+      const marks = (page.content.match(/\[PLACEHOLDER\]|\bTODO\b|\bFIXME\b/g) || []).length;
+      if (marks) {
+        warnings.push(
+          `src/pages/${slug}/${language}.md has ${marks} placeholder${marks > 1 ? 's' : ''} ` +
+            `and is published — mark it draft: true or finish the text`
+        );
+      }
+    });
+  });
+
+  // 4. Placeholders the templates ask for that the build never supplies, and
+  //    values the build supplies that no template uses.
+  ['index-template.html', 'page-template.html'].forEach(name => {
+    const file = path.join(templatesDirectory, name);
+    if (!fs.existsSync(file)) return;
+    const used = new Set(
+      [...fs.readFileSync(file, 'utf-8').matchAll(/{{\s*([\w.]+)\s*}}/g)].map(m => m[1])
+    );
+    used.forEach(key => {
+      if (!new RegExp(`\\b${key}[,:]`).test(source)) {
+        problems.push(`${name} uses {{${key}}}, which build.js never sets`);
+      }
+    });
   });
 
   if (warnings.length) {
@@ -527,7 +614,6 @@ pageSlugs().forEach(slug => {
         langTag: langMeta[language].tag,
         dir: langMeta[language].dir || 'ltr',
         title,
-        role: strings[language].role,
         renderedContent,
         head: (draft ? '<meta name="robots" content="noindex, nofollow">\n  ' : '') +
               headAssets(data),
@@ -538,7 +624,7 @@ pageSlugs().forEach(slug => {
         switchLabel: strings[language].switchLabel,
         themeLabel: strings[language].themeLabel,
         skip: strings[language].skip,
-        description: data.description || strings[language].role,
+        descriptionMeta: metaDescription(summarise(content)),
         year: new Date().getFullYear(),
         // Every page sits one level deep (build/<lang>/page.html).
         assets: '../assets'
@@ -585,7 +671,7 @@ if (cv) {
       switchLabel: t.switchLabel,
       themeLabel: t.themeLabel,
       skip: t.skip,
-      description: t.role,
+      descriptionMeta: metaDescription(t.cvDescription),
       year: new Date().getFullYear(),
       assets: '../assets'
     });
@@ -615,6 +701,47 @@ fs.writeFileSync(
 </html>
 `
 );
+
+// --- Meta description --------------------------------------------------------
+// Taken from the page's first paragraph, so every page describes itself rather
+// than sharing one generic line.
+
+function metaDescription(text) {
+  // An empty content="" is worse than no tag: it tells a crawler the page has
+  // been described and the description is nothing.
+  if (!text) return '';
+  const safe = text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  return `<meta name="description" content="${safe}">`;
+}
+
+function summarise(markdown, limit = 155) {
+  const firstPara = markdown
+    .split(/\n\s*\n/)
+    .map(block => block.trim())
+    .find(
+      block =>
+        block &&
+        !block.startsWith('#') &&      // headings
+        !block.startsWith('<') &&      // raw HTML: tables, figures, maths
+        !block.startsWith('!') &&      // images
+        !block.startsWith('|')         // tables
+    );
+  if (!firstPara) return '';
+
+  const text = firstPara
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')          // images
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')        // links keep their text
+    .replace(/[*_`]/g, '')                          // emphasis, code
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (text.length <= limit) return text;
+  // Cut on a word boundary, and prefer ending at a sentence if one is near.
+  const cut = text.slice(0, limit);
+  const sentence = cut.lastIndexOf('. ');
+  if (sentence > limit * 0.6) return cut.slice(0, sentence + 1);
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]$/, '') + '…';
+}
 
 // --- Post media --------------------------------------------------------------
 // Anything that is not a .md or _page.yml inside a page folder is that page's

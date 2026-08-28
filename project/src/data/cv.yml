@@ -184,30 +184,30 @@ sections:
         from: "2019"
         to: "2020"
         notes:
-          - Tutor — Calculus of Variations
-          - Tutor — Special Relativity
-          - Tutor — Numerical Analysis
-          - Tutor — Quantum Theory
-          - Tutor — Constructive Mathematics
-          - Tutor — Continuous Mathematics
-          - Teaching Assistant — Introductory Calculus
-          - Teaching Assistant — Geometry
+          - Tutor - Calculus of Variations
+          - Tutor - Special Relativity
+          - Tutor - Numerical Analysis
+          - Tutor - Quantum Theory
+          - Tutor - Constructive Mathematics
+          - Tutor - Continuous Mathematics
+          - Teaching Assistant - Introductory Calculus
+          - Teaching Assistant - Geometry
       - title: University of Oxford
         from: "2018"
         to: "2020"
         notes:
-          - Tutor — Numerical Linear Algebra
-          - Teaching Assistant — Finite Element Method for Partial Differential Equations
-          - Teaching Assistant — Numerical Solution of Differential Equations I
+          - Tutor - Numerical Linear Algebra
+          - Teaching Assistant - Finite Element Method for Partial Differential Equations
+          - Teaching Assistant - Numerical Solution of Differential Equations I
       - title: Turin Polytechnic University
         from: "2015"
         to: "2016"
         notes:
-          - Teaching Assistant — Numerical Calculus and Scientific Computing
-          - Teaching Assistant — Modelling and Numerical Methods
-          - Teaching Assistant — Mathematical Analysis II
-          - Teaching Assistant — Linear Algebra and Geometry
-          - Teaching Assistant — Mathematical Analysis I
+          - Teaching Assistant - Numerical Calculus and Scientific Computing
+          - Teaching Assistant - Modelling and Numerical Methods
+          - Teaching Assistant - Mathematical Analysis II
+          - Teaching Assistant - Linear Algebra and Geometry
+          - Teaching Assistant - Mathematical Analysis I
 
   - id: skills
     entries:
