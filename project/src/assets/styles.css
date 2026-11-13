@@ -42,6 +42,32 @@
   unicode-range: U+0370-03FF, U+1F00-1FFF;
 }
 
+/* IBM Plex Sans, one weight, for the few small details set in a sans (see
+   --font-meta). Latin and Latin Extended only: everything it sets is a date,
+   a language code or the name in the footer. Its figures are all the same
+   width, so a column of dates lines up digit by digit. */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('fonts/IBMPlexSans-Regular-Latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+                 U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+                 U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('fonts/IBMPlexSans-Regular-LatinExt.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+                 U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+                 U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 @font-face {
   font-family: 'IBM Plex Mono';
   src: url('fonts/IBMPlexMono-Regular.woff2') format('woff2');
@@ -109,10 +135,14 @@
      One family. Literata sets the headings, the reading text and the labels
      (in its true small caps); font-optical-sizing is auto by default, so the
      opsz axis follows font-size and each size gets the drawing made for it.
-     The monospace is kept for code alone, where it is the right tool. */
+     The monospace is kept for code alone, where it is the right tool.
+     --font-meta is the one exception: a sans for the details around the
+     content rather than in it (dates, badges, the language button, the
+     footer), set in ordinary case, not small caps. */
   --font-display: 'Literata', Georgia, serif;
   --font-text: 'Literata', Georgia, serif;
   --font-label: 'Literata', Georgia, serif;
+  --font-meta: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'IBM Plex Mono', 'Source Code Pro', 'Literata', ui-monospace, SFMono-Regular,
                Menlo, Consolas, monospace;
 
@@ -317,10 +347,9 @@ body {
   border: 1px solid transparent;
   border-radius: var(--radius);
   color: var(--slate);
-  font-family: var(--font-label);
-  font-variant-caps: all-small-caps;
-  font-size: var(--text-2xs);
-  letter-spacing: 0.08em;
+  font-family: var(--font-meta);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
   transition: border-color 140ms ease, color 140ms ease;
@@ -852,11 +881,8 @@ mjx-container svg {
 
 .cv-dates {
   color: var(--slate);
-  font-family: var(--font-label);
-  font-variant-caps: all-small-caps;
-  font-size: var(--text-xs);
-  font-variant-numeric: oldstyle-nums;   /* Literata has no tabular oldstyle figures; dates are left-aligned, so proportional is fine */
-  letter-spacing: 0.02em;
+  font-family: var(--font-meta);
+  font-size: 0.92rem;
   white-space: nowrap;
 }
 
@@ -881,9 +907,8 @@ mjx-container svg {
 .cv-badge {
   margin-inline-start: var(--s1);
   color: var(--plasma);
-  font-family: var(--font-label);
-  font-variant-caps: all-small-caps;
-  font-size: 0.83rem;
+  font-family: var(--font-meta);
+  font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -976,10 +1001,8 @@ mjx-container svg {
 .post-date {
   margin-inline-start: auto;
   color: var(--slate);
-  font-family: var(--font-label);
-  font-variant-caps: all-small-caps;
-  font-size: var(--text-xs);
-  font-variant-numeric: oldstyle-nums;   /* Literata has no tabular oldstyle figures; dates are left-aligned, so proportional is fine */
+  font-family: var(--font-meta);
+  font-size: 0.92rem;
 }
 
 /* --- Contact row ---------------------------------------------------------- */
@@ -1030,11 +1053,9 @@ mjx-container svg {
   padding-inline: max(var(--s4), (100% - var(--measure)) / 2);
   border-top: 1px solid var(--rule);
   color: var(--slate);
-  font-family: var(--font-label);
-  font-variant-caps: all-small-caps;
-  font-size: var(--text-2xs);
-  letter-spacing: 0.06em;
-  font-variant-numeric: oldstyle-nums;
+  font-family: var(--font-meta);
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
 }
 
 
