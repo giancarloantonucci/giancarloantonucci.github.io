@@ -806,7 +806,7 @@ fs.writeFileSync(
   <meta charset="UTF-8">
   <meta http-equiv="refresh" content="0; url=./${defaultLanguage}/index.html">
   <link rel="canonical" href="./${defaultLanguage}/index.html">
-  <title>G. A. Antonucci</title>
+  <title>Giancarlo Antonino Antonucci</title>
 </head>
 <body>
   <p><a href="./${defaultLanguage}/index.html">Continue to the site</a></p>
@@ -928,7 +928,7 @@ redirects.forEach(rule => {
   <meta charset="UTF-8">
   <meta http-equiv="refresh" content="0; url=${rel}">
   <link rel="canonical" href="${canonical}">
-  <title>G. A. Antonucci</title>
+  <title>Giancarlo Antonino Antonucci</title>
 </head>
 <body>
   <p><a href="${rel}">Continue to the site</a></p>
@@ -981,7 +981,7 @@ fs.writeFileSync(
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>G. A. Antonucci — Page not found</title>
+  <title>Page not found · Giancarlo Antonino Antonucci</title>
   <link rel="stylesheet" href="${siteUrl}assets/styles.css">
 </head>
 <body>
