@@ -3,6 +3,10 @@
 # stay in their original language, as is normal on an academic CV; only the
 # section headings and connective words are translated (see build.js).
 
+# Languages the CV is published in. Every other language in languages.yml gets
+# a short page at /<language>/cv.html that points to these versions instead.
+languages: [en, it, scn]
+
 # PDF versions, listed at the top of the CV page in this order. Each link only
 # appears if its file is actually in src/assets/pdfs/, so you can ship one
 # before the other without a dead link. `key` picks the label out of ui.yml

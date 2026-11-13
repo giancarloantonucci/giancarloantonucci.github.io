@@ -90,6 +90,36 @@ function isPublished(language, slug) {
   return sourcePageExists(language, slug) && !isDraft(language, slug);
 }
 
+// A published page can still be empty: a language file with a title and no
+// text yet. Such a page, and the CV in a language it is not published in,
+// becomes a pointer to the languages that do have the content (see
+// unavailableNotice). Only pages with content are offered in the language
+// menu, declared as hreflang alternates or listed in the sitemap.
+function hasContent(language, slug) {
+  if (slug === 'cv') return Boolean(cv) && cvLanguages.includes(language);
+  if (!isPublished(language, slug)) return false;
+  if (loadPage(slug, language).content.trim()) return true;
+  return slug === 'notebook' && Boolean(renderPostIndex(language));
+}
+
+function contentLanguages(slug) {
+  return languages.filter(language => hasContent(language, slug));
+}
+
+function unavailableNotice(language, slug) {
+  const links = contentLanguages(slug)
+    .map(code => {
+      const meta = langMeta[code];
+      const dir = meta.dir === 'rtl' ? ' dir="rtl"' : '';
+      return `<li><a href="../${code}/${slug}.html" lang="${meta.tag}" hreflang="${meta.tag}"${dir}>${meta.name}</a></li>`;
+    })
+    .join('\n  ');
+  return `<p class="unavailable-note">${strings[language].unavailable}</p>
+<ul class="unavailable-links">
+  ${links}
+</ul>`;
+}
+
 function buildNav(language, currentSlug) {
   return navOrder
     .filter(slug => isPublished(language, slug))
@@ -105,7 +135,7 @@ function buildNav(language, currentSlug) {
 // A language option is only shown when that page really exists in that language.
 function buildLanguageOptions(currentLanguage, slug) {
   return languages
-    .filter(language => isPublished(language, slug))
+    .filter(language => language === currentLanguage || hasContent(language, slug))
     .map(language => {
       const meta = langMeta[language];
       const isCurrent = language === currentLanguage;
@@ -134,6 +164,10 @@ const cvPath = path.join(sourceDirectory, 'data', 'cv.yml');
 const cv = fs.existsSync(cvPath)
   ? yaml.load(fs.readFileSync(cvPath, 'utf-8'))
   : null;
+
+// cv.yml's `languages:` says which languages the CV is published in. Every
+// other language gets a pointer page at /<language>/cv.html instead.
+const cvLanguages = cv ? cv.languages || languages : [];
 
 function escapeHtml(value) {
   return String(value).replace(/&(?!#?\w+;)/g, '&amp;').replace(/</g, '&lt;');
@@ -340,12 +374,12 @@ function renderPostIndex(language) {
 
 function buildAlternates(slug) {
   const links = languages
-    .filter(language => isPublished(language, slug))
+    .filter(language => hasContent(language, slug))
     .map(
       language =>
         `<link rel="alternate" hreflang="${langMeta[language].tag}" href="../${language}/${slug}.html">`
     );
-  if (isPublished(defaultLanguage, slug)) {
+  if (hasContent(defaultLanguage, slug)) {
     links.push(
       `<link rel="alternate" hreflang="x-default" href="../${defaultLanguage}/${slug}.html">`
     );
@@ -414,8 +448,10 @@ function validate() {
     }
   ];
 
+  // The CV's labels are only needed in the languages it is published in.
+  const cvContract = ['cvSections', 'cvDownloads'];
   contracts.forEach(({ label, ids, source }) => {
-    languages.forEach(language => {
+    (cvContract.includes(label) ? cvLanguages : languages).forEach(language => {
       const map = strings[language] && strings[language][label];
       ids.forEach(id => {
         if (!map || !map[id]) {
@@ -431,6 +467,12 @@ function validate() {
         }
       });
     });
+  });
+
+  (cv && cv.languages ? cv.languages : []).forEach(code => {
+    if (!languages.includes(code)) {
+      problems.push(`cv.yml: languages lists "${code}", which is not a code in languages.yml`);
+    }
   });
 
   // 2. site.yml must name things that exist.
@@ -580,6 +622,7 @@ fs.writeFileSync(path.join(buildDirectory, '.nojekyll'), '');
 
 let pageCount = 0;
 const builtPages = [];
+const pointerPages = [];
 
 pageSlugs().forEach(slug => {
   languages.forEach(language => {
@@ -598,7 +641,11 @@ pageSlugs().forEach(slug => {
       renderedContent = index ? `${renderedContent}\n${index}` : renderedContent;
     }
 
-    if (!renderedContent) {
+    // Empty here but written elsewhere: point to the languages that have it.
+    const pointer = !renderedContent && contentLanguages(slug).length > 0;
+    if (pointer) {
+      renderedContent = unavailableNotice(language, slug);
+    } else if (!renderedContent) {
       renderedContent = `<p class="empty-note">${strings[language].empty}</p>`;
     }
 
@@ -616,6 +663,7 @@ pageSlugs().forEach(slug => {
         title,
         renderedContent,
         head: (draft ? '<meta name="robots" content="noindex, nofollow">\n  ' : '') +
+              (pointer ? '<meta name="robots" content="noindex">\n  ' : '') +
               headAssets(data),
         inlineScript,
         alternates: buildAlternates(slug),
@@ -624,7 +672,7 @@ pageSlugs().forEach(slug => {
         switchLabel: strings[language].switchLabel,
         themeLabel: strings[language].themeLabel,
         skip: strings[language].skip,
-        descriptionMeta: metaDescription(summarise(content)),
+        descriptionMeta: pointer ? '' : metaDescription(summarise(content)),
         year: new Date().getFullYear(),
         // Every page sits one level deep (build/<lang>/page.html).
         assets: '../assets'
@@ -634,7 +682,8 @@ pageSlugs().forEach(slug => {
     const outPath = path.join(buildDirectory, language, `${slug}.html`);
     fs.ensureDirSync(path.dirname(outPath));
     fs.writeFileSync(outPath, html);
-    if (!draft) builtPages.push(`${language}/${slug}.html`);
+    if (!draft && !pointer) builtPages.push(`${language}/${slug}.html`);
+    if (pointer) pointerPages.push(`${language}/${slug}`);
     pageCount += 1;
   });
 });
@@ -649,8 +698,9 @@ if (cv) {
 
   languages.forEach(language => {
     const t = strings[language];
-    let content = renderCv(language);
-    if (pdfs.length) {
+    const published = cvLanguages.includes(language);
+    let content = published ? renderCv(language) : unavailableNotice(language, 'cv');
+    if (published && pdfs.length) {
       const links = pdfs
         .map(p => `<a href="../assets/pdfs/${p.file}">${t.cvDownloads[p.key]}</a>`)
         .join('');
@@ -663,7 +713,7 @@ if (cv) {
       dir: langMeta[language].dir || 'ltr',
       title: t.cvTitle,
       renderedContent: content,
-      head: '',
+      head: published ? '' : '<meta name="robots" content="noindex">',
       inlineScript,
       alternates: buildAlternates('cv'),
       nav: buildNav(language, 'cv'),
@@ -671,7 +721,7 @@ if (cv) {
       switchLabel: t.switchLabel,
       themeLabel: t.themeLabel,
       skip: t.skip,
-      descriptionMeta: metaDescription(t.cvDescription),
+      descriptionMeta: published ? metaDescription(t.cvDescription) : '',
       year: new Date().getFullYear(),
       assets: '../assets'
     });
@@ -679,7 +729,8 @@ if (cv) {
     const cvPath = path.join(buildDirectory, language, 'cv.html');
     fs.ensureDirSync(path.dirname(cvPath));
     fs.writeFileSync(cvPath, html);
-    builtPages.push(`${language}/cv.html`);
+    if (published) builtPages.push(`${language}/cv.html`);
+    else pointerPages.push(`${language}/cv`);
     pageCount += 1;
   });
 }
@@ -909,6 +960,11 @@ pageSlugs().forEach(slug =>
 if (drafts.length) {
   console.log('\nDrafts (built, but not linked or indexed):');
   drafts.forEach(d => console.log(`  ${d}`));
+}
+
+if (pointerPages.length) {
+  console.log('\nPointer pages (no content in that language; they link to the versions that have it):');
+  console.log(`  ${pointerPages.join(', ')}`);
 }
 
 const gaps = coverage.filter(page => page.missing.length);

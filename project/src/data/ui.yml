@@ -27,6 +27,7 @@ en:
 
   # shown instead of content
   empty: Nothing here yet. Notes and write-ups will land on this page as they are finished.
+  unavailable: "This page isn’t available in this language. You can read it in:"
   draftNotice: Draft — this page is not finished and is not linked from the site.
 
   # notebook section headings
@@ -72,6 +73,7 @@ zh:
   themeLabel: 切换配色
 
   empty: 这里还没有内容。笔记和文章完成后会发布在此页面。
+  unavailable: "此页面暂无该语言版本。您可以阅读以下语言的版本："
   draftNotice: 草稿——此页面尚未完成，站点中没有链接指向它。
 
   postSections:
@@ -115,6 +117,7 @@ es:
   themeLabel: Cambiar el tema
 
   empty: Todavía no hay nada aquí. Las notas y los artículos aparecerán en esta página a medida que se terminen.
+  unavailable: "Esta página no está disponible en este idioma. Puedes leerla en los siguientes idiomas:"
   draftNotice: "Borrador: esta página no está terminada y no está enlazada desde el sitio."
 
   postSections:
@@ -158,6 +161,7 @@ ar:
   themeLabel: تغيير مظهر الألوان
 
   empty: لا يوجد شيء هنا بعد. ستُنشر الملاحظات والمقالات على هذه الصفحة عند اكتمالها.
+  unavailable: "هذه الصفحة غير متاحة بهذه اللغة. يمكنك قراءتها باللغات التالية:"
   draftNotice: مسودة — هذه الصفحة غير مكتملة ولا يوجد رابط إليها من الموقع.
 
   postSections:
@@ -201,6 +205,7 @@ ja:
   themeLabel: 配色を切り替える
 
   empty: まだ何もありません。ノートや記事は完成しだいこのページに掲載します。
+  unavailable: "このページはこの言語では提供されていません。次の言語でお読みいただけます："
   draftNotice: 下書き — このページは未完成で、サイトからリンクされていません。
 
   postSections:
@@ -244,6 +249,7 @@ sw:
   themeLabel: Badilisha mandhari
 
   empty: Bado hakuna kitu hapa. Maandishi yataongezwa kwenye ukurasa huu yakikamilika.
+  unavailable: "Ukurasa huu haupatikani kwa lugha hii. Unaweza kuusoma kwa lugha hizi:"
   draftNotice: Rasimu — ukurasa huu haujakamilika na hauna kiungo kutoka kwenye tovuti.
 
   postSections:
@@ -287,6 +293,7 @@ el:
   themeLabel: Αλλαγή θέματος
 
   empty: Δεν υπάρχει τίποτα εδώ ακόμη. Σημειώσεις και κείμενα θα προστεθούν σε αυτή τη σελίδα καθώς ολοκληρώνονται.
+  unavailable: "Η σελίδα αυτή δεν είναι διαθέσιμη σε αυτή τη γλώσσα. Μπορείτε να τη διαβάσετε στις εξής γλώσσες:"
   draftNotice: Πρόχειρο — η σελίδα δεν έχει ολοκληρωθεί και δεν υπάρχει σύνδεσμος προς αυτήν.
 
   postSections:
@@ -330,6 +337,7 @@ it:
   themeLabel: Cambia tema
 
   empty: Ancora niente qui. Appunti e resoconti arriveranno su questa pagina appena pronti.
+  unavailable: "Questa pagina non è disponibile in questa lingua. Puoi leggerla nelle seguenti lingue:"
   draftNotice: "Bozza: questa pagina non è finita e non è collegata dal sito."
 
   postSections:
@@ -373,6 +381,7 @@ scn:
   themeLabel: Cancia u tema
 
   empty: Ancora nenti ccà. Appunti e scritti arrivanu nta sta pàggina appena su pronti.
+  unavailable: "Sta pàggina nun è dispunìbbili nta sta lingua. A poi lèggiri nti sti lingui:"
   draftNotice: Abbozzu — sta pàggina un è finuta e nun è culligata dû situ.
 
   postSections:
@@ -416,6 +425,7 @@ mt:
   themeLabel: Ibdel it-tema
 
   empty: Għad m'hawn xejn hawnhekk. In-noti u l-kitbiet jitilgħu f'din il-paġna hekk kif jitlestew.
+  unavailable: "Din il-paġna mhix disponibbli b’din il-lingwa. Tista’ taqraha b’dawn il-lingwi:"
   draftNotice: Abbozz — din il-paġna għadha mhix lesta u m'hemmx link għaliha mis-sit.
 
   postSections:
@@ -460,6 +470,7 @@ pms:
   themeLabel: Cambia ël tema
 
   empty: A-i é ancora gnente sì. Nòte e scrit a rivran an sta pàgina apopré ch'a son pront.
+  unavailable: "Sta pàgina a l'é nen disponìbil an sta lenga. A peul lesla an coste lenghe:"
   draftNotice: Abòss — sta pàgina a l'é nen finìa e a-i é gnun colegament da già dël sit.
 
   postSections:
@@ -504,6 +515,7 @@ itg:
   themeLabel: Switch colour theme
 
   empty: Nothing here yet. Notes and write-ups will land on this page as they are finished.
+  unavailable: "This page isn’t available in this language. You can read it in:"
   draftNotice: Draft — this page is not finished and is not linked from the site.
 
   postSections:

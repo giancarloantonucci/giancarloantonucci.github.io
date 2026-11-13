@@ -239,35 +239,14 @@ body {
   transition: color 140ms ease;
 }
 
-.nav-link::after {
-  content: "";
-  position: absolute;
-  inset-inline: var(--s3);
-  inset-block-end: var(--s1);
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 180ms ease;
-}
-
 .nav-link:hover,
 .nav-link:focus-visible {
   color: var(--ink);
 }
 
-.nav-link:hover::after {
-  transform: scaleX(1);
-}
-
 .nav-link.is-current {
   color: var(--ink);
   font-weight: 600;
-}
-
-.nav-link.is-current::after {
-  background: var(--plasma);
-  transform: scaleX(1);
 }
 
 /* --- Language switch ----------------------------------------------------- */
@@ -538,22 +517,18 @@ body {
   margin-bottom: var(--s1);
 }
 
+/* Links carry no underline anywhere on the site: colour alone marks them. */
 .prose a {
   color: var(--plasma);
   overflow-wrap: break-word;
   text-decoration: none;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 100% 1px;
-  background-repeat: no-repeat;
-  background-position: 0 calc(100% - 0.08em);
-  transition: color 140ms ease, background-size 180ms ease;
+  transition: color 140ms ease;
 }
 
 /* Hover darkens. Going lighter would drop contrast below 4.5:1. */
 .prose a:hover,
 .prose a:focus-visible {
   color: var(--plasma-deep);
-  background-size: 100% 2px;
 }
 
 .prose blockquote {
@@ -786,6 +761,18 @@ mjx-container svg {
   color: var(--ink);
 }
 
+/* --- Pages not available in this language ------------------------------- */
+
+.prose .unavailable-links {
+  margin: var(--s2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prose .unavailable-links li {
+  margin-bottom: var(--s2);
+}
+
 /* --- CV ------------------------------------------------------------------- */
 
 .prose .cv-profile {
@@ -912,9 +899,8 @@ mjx-container svg {
   border-bottom: 1px solid var(--rule-soft);
 }
 
-/* These links live inside .prose, which paints a gradient underline on every
-   anchor. The titles keep it; the flags must not have one, and neither should
-   get a second line from text-decoration on top. */
+/* Post titles and flags are links inside .prose; like every link on the
+   site they carry no underline. */
 .post-title {
   color: var(--plasma);
   text-decoration: none;
@@ -924,10 +910,6 @@ mjx-container svg {
 .post-title:focus-visible {
   color: var(--plasma-deep);
   text-decoration: none;
-}
-
-.prose .post-flag {
-  background-image: none;
 }
 
 .post-langs {
@@ -1170,10 +1152,6 @@ mjx-container svg {
     /* Five links have to fit a 390px phone without scrolling. */
     padding: var(--s3) var(--s1);
     font-size: 0.78rem;
-  }
-
-  .nav-link::after {
-    inset-inline: var(--s2);
   }
 
   .masthead {
