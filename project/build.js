@@ -127,14 +127,45 @@ function unavailableNotice(language, slug) {
 </ul>`;
 }
 
+// Home and Notebook are shown as icons, so they read the same in every
+// language. Each icon has two drawings: an outline, and a filled one for the
+// page you are on (the CSS shows one or the other). The label in ui.yml is
+// still used, as the link's accessible name and its tooltip; a language
+// without one falls back to the default language's.
+const navIcons = {
+  index: `<svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path class="icon-outline" d="M12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/>
+          <path class="icon-filled" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>`,
+  notebook: `<svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <g class="icon-outline">
+            <path fill-rule="evenodd" d="M8 2h10a2 2 0 012 2v16a2 2 0 01-2 2H8a2 2 0 01-2-2V4a2 2 0 012-2zm0 2v16h10V4H8z"/>
+            <path d="M4 6h4v2H4zm0 5h4v2H4zm0 5h4v2H4zM10.5 7h5v2h-5zm0 4h5v2h-5z"/>
+          </g>
+          <g class="icon-filled">
+            <path fill-rule="evenodd" d="M8 2h10a2 2 0 012 2v16a2 2 0 01-2 2H8a2 2 0 01-2-2V4a2 2 0 012-2zm2.5 5v2h5V7zm0 4v2h5v-2z"/>
+            <path d="M4 6h4v2H4zm0 5h4v2H4zm0 5h4v2H4z"/>
+          </g>
+        </svg>`
+};
+
+function navLabel(language, slug) {
+  const own = strings[language] && strings[language].nav && strings[language].nav[slug];
+  return own || strings[defaultLanguage].nav[slug];
+}
+
 function buildNav(language, currentSlug) {
   return navOrder
     .filter(slug => isPublished(language, slug))
     .map(slug => {
       const isCurrent = slug === currentSlug;
-      const classes = isCurrent ? ' class="nav-link is-current"' : ' class="nav-link"';
+      const icon = navIcons[slug];
+      const classes = ['nav-link', icon && 'has-icon', isCurrent && 'is-current'].filter(Boolean).join(' ');
       const aria = isCurrent ? ' aria-current="page"' : '';
-      return `<a${classes}${aria} href="${slug}.html">${strings[language].nav[slug]}</a>`;
+      const label = escapeHtml(navLabel(language, slug));
+      return icon
+        ? `<a class="${classes}"${aria} href="${slug}.html" aria-label="${label}" title="${label}">${icon}</a>`
+        : `<a class="${classes}"${aria} href="${slug}.html">${label}</a>`;
     })
     .join('\n        ');
 }
@@ -437,7 +468,8 @@ function validate() {
 
   // 1. Every identifier defined elsewhere needs a label, in every language.
   const contracts = [
-    { label: 'nav', ids: navOrder, source: 'nav in site.yml' },
+    // Icon links fall back to the default language's label (navLabel).
+    { label: 'nav', ids: navOrder.filter(slug => !navIcons[slug]), known: navOrder, source: 'nav in site.yml' },
     {
       label: 'postSections',
       ids: postSectionOrder,
@@ -457,7 +489,7 @@ function validate() {
 
   // The CV's labels are only needed in the languages it is published in.
   const cvContract = ['cvSections', 'cvDownloads'];
-  contracts.forEach(({ label, ids, source }) => {
+  contracts.forEach(({ label, ids, known = ids, source }) => {
     (cvContract.includes(label) ? cvLanguages : languages).forEach(language => {
       const map = strings[language] && strings[language][label];
       ids.forEach(id => {
@@ -469,7 +501,7 @@ function validate() {
       });
       // and the reverse: a label with no identifier behind it
       Object.keys(map || {}).forEach(key => {
-        if (!ids.includes(key)) {
+        if (!known.includes(key)) {
           warnings.push(`ui.yml: ${language}.${label}.${key} labels nothing in ${source}`);
         }
       });
@@ -914,7 +946,7 @@ const notFoundLinks = languages
   .filter(language => sourcePageExists(language, 'index'))
   .map(
     language =>
-      `<a class="contact-link" href="${siteUrl}${language}/index.html">${strings[language].nav.index}</a>`
+      `<a class="contact-link" href="${siteUrl}${language}/index.html">${navLabel(language, 'index')}</a>`
   )
   .join('\n        ');
 

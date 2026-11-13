@@ -291,6 +291,29 @@ body {
   font-weight: 600;
 }
 
+/* Home and Notebook are icons. The outline shows normally; the filled
+   drawing marks the page you are on, as bold does for a text link. */
+.nav-link.has-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: currentColor;
+}
+
+.nav-icon .icon-filled,
+.nav-link.is-current .nav-icon .icon-outline {
+  display: none;
+}
+
+.nav-link.is-current .nav-icon .icon-filled {
+  display: inline;
+}
+
 /* --- Language switch ----------------------------------------------------- */
 
 .dropdown {
@@ -845,6 +868,12 @@ mjx-container svg {
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.prose .cv-download a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;   /* a 24px target for a finger */
 }
 
 .cv-section {
