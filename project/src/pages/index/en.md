@@ -2,8 +2,10 @@
 title: Home
 ---
 
-I’m a computational scientist at the [UKAEA](https://www.ukaea.org), the UK’s research centre for nuclear fusion. I combine advanced mathematics (numerical analysis, nonlinear programming, and mathematical modelling) with high-performance computing to run faster simulations of the plasma inside fusion reactors (tokamaks).
+I’m a computational scientist at the [UKAEA](https://www.ukaea.org), the UK’s fusion research agency. I combine numerical analysis, nonlinear programming, and mathematical modelling with high-performance computing to make simulations of the plasma inside tokamaks faster.
 
-During my time at Oxford’s [Centre for Doctoral Training in Industrially Focused Mathematical Modelling](https://www.maths.ox.ac.uk/study-here/postgraduate-study/industrially-focused-mathematical-modelling-epsrc-cdt), I worked on problems brought by companies: satellite collision risk for Transfinite Systems, simultaneous transmission and reception on a single channel for Dstl (the research arm of the UK Ministry of Defence), and the accuracy of crowd counting at airports for CrowdVision.
+During my PhD at Oxford’s [Centre for Doctoral Training in Industrially Focused Mathematical Modelling](https://www.maths.ox.ac.uk/study-here/postgraduate-study/industrially-focused-mathematical-modelling-epsrc-cdt), I worked on parallel-in-time methods for chaotic systems. Ordinary time-stepping is sequential, so a longer simulation can’t be sped up just by adding processors. Parallel-in-time methods compute many points in time at once, but they struggle where small errors grow exponentially. My approach was a moving-window algorithm with finite-time convergence guarantees.
 
-Please get in touch if you have any questions or would like to collaborate.
+Alongside that, I worked on problems from industry: satellite collision risk for Transfinite Systems, transmitting and receiving on the same channel for Dstl (the Ministry of Defence’s research lab), and crowd counting at airports for CrowdVision.
+
+If you’d like to work together, email me.
