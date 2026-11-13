@@ -172,7 +172,7 @@
   --text-cv:   1.07rem;   /* CV section headings */
   --text-md:   1.2rem;    /* prose section headings */
   --text-lg:   clamp(1.8rem, 5vw, 2.63rem);      /* page titles */
-  --text-xl:   clamp(1.68rem, 7.25vw, 3.27rem);  /* the name */
+  --text-xl:   clamp(1.9rem, 8.4vw, 3.9rem);     /* the name */
 
   /* Space — a single scale. Nothing off-scale anywhere below. */
   --s1: 0.25rem;
@@ -563,16 +563,26 @@ body {
 
 /* --- Masthead ------------------------------------------------------------ */
 
+/* Photo above the name, both centred, like the links and the footer below.
+   Side by side, the 42rem column cannot hold a large photo and "Giancarlo
+   Antonino" on one line at a large size; stacked, it can. */
 .masthead {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: var(--s5);
   margin-bottom: var(--s7);
 }
 
 .masthead-text {
-  flex: 1 1 auto;
   min-width: 0;
+}
+
+/* The first name, Giancarlo Antonino, never breaks; the font size is set
+   so it fits a 320px phone. */
+.name-first {
+  white-space: nowrap;
 }
 
 .masthead h1 {
@@ -612,14 +622,15 @@ body {
 .portrait {
   filter: var(--img-filter);
   flex: 0 0 auto;
-  /* The name is two lines of --text-xl at line-height 1.04, so 2.08em of it.
-     Sizing the portrait from the same token keeps the two exactly level at
-     every viewport width, including through the clamp. */
-  width: calc(var(--text-xl) * 2.08);
-  height: calc(var(--text-xl) * 2.08);
+  /* A circle. The face is in the middle of the photo, so a centred crop
+     loses only the corners. The file is 434px wide: sharp up to about
+     13.5rem on a 2x screen. */
+  width: 12rem;
+  height: 12rem;
   margin: 0;
   object-fit: cover;
-  border-radius: var(--radius-sm);
+  object-position: 50% 45%;
+  border-radius: 50%;
   box-shadow: 0 0 0 1px var(--rule);
 }
 
@@ -1115,6 +1126,7 @@ mjx-container svg {
 .contact {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--s2) var(--s5);
   margin-top: var(--s7);
   padding-top: var(--s4);
@@ -1149,14 +1161,15 @@ mjx-container svg {
 /* --- Footer --------------------------------------------------------------- */
 
 /* The rule runs the full width of the screen, like the navbar's; the text
-   inside lines up with the column above. (100% - measure) / 2 is exactly
-   where .content starts once the screen is wider than the column, and
-   --s4 is where it starts below that. */
+   is centred on the column above. (100% - measure) / 2 is exactly where
+   .content starts once the screen is wider than the column, and --s4 is
+   where it starts below that, so the padding keeps the two in step. */
 .site-footer {
   width: 100%;
   padding-block: var(--s4) calc(var(--s7) + env(safe-area-inset-bottom, 0px));
   padding-inline: max(var(--s4), (100% - var(--measure)) / 2);
   border-top: 1px solid var(--rule);
+  text-align: center;
   color: var(--slate);
   font-family: var(--font-meta);
   font-size: 0.875rem;
@@ -1324,14 +1337,12 @@ mjx-container svg {
   }
 
   .masthead {
-    flex-direction: column;
-    align-items: flex-start;
     gap: var(--s4);
   }
 
   .portrait {
-    width: 6.5rem;
-    height: 6.5rem;
+    width: 9rem;
+    height: 9rem;
   }
 
   .cv-entry {
