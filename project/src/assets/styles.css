@@ -681,9 +681,8 @@ body {
 .vocoid-table tbody th,
 .data-table thead th {
   color: var(--slate);
-  font-family: var(--font-label);
-  font-variant-caps: all-small-caps;
-  font-size: var(--text-2xs);
+  font-family: var(--font-meta);
+  font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -842,9 +841,8 @@ mjx-container svg {
   flex-wrap: wrap;
   gap: var(--s2) var(--s5);
   margin: 0 0 var(--cv-downloads-gap);
-  font-family: var(--font-label);
-  font-variant-caps: all-small-caps;
-  font-size: 0.94rem;
+  font-family: var(--font-meta);
+  font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
