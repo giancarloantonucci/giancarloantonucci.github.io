@@ -129,7 +129,7 @@
   --slate:       #5b6675;  /* secondary text                   5.4:1 */
   --rule:        #dfe4ea;
   --rule-soft:   #eaeef3;
-  --plasma:      #a8175f;  /* links                            6.6:1 */
+  --plasma:      #d11d76;  /* links  4.7:1 on paper, 3.1:1 against body text */
   --plasma-deep: #7d1046;  /* link hover — darker, not lighter 9.9:1 */
   --glow:        #e23a93;  /* focus ring only                  3.7:1 */
 
@@ -302,7 +302,6 @@ body {
   transition: color 140ms ease;
 }
 
-.nav-link:hover,
 .nav-link:focus-visible {
   color: var(--ink);
 }
@@ -364,7 +363,6 @@ body {
   transition: opacity 140ms ease, filter 140ms ease;
 }
 
-.lang-flag:hover .language-flag,
 .lang-flag:focus-visible .language-flag,
 .lang-flag.is-current .language-flag {
   opacity: 1;
@@ -417,11 +415,6 @@ body {
   transition: border-color 140ms ease, color 140ms ease;
 }
 
-.theme-toggle:hover {
-  color: var(--ink);
-  border-color: var(--rule);
-}
-
 .theme-toggle svg {
   /* The same size as the house and notebook, and from the same family:
      sun and moon are drawn as a pair, both in outline. */
@@ -453,7 +446,6 @@ body {
   transition: border-color 140ms ease, color 140ms ease;
 }
 
-.dropdown-button:hover,
 .dropdown-button[aria-expanded="true"] {
   color: var(--ink);
   border-color: var(--rule);
@@ -505,7 +497,6 @@ body {
   text-decoration: none;
 }
 
-.lang-option:hover,
 .lang-option:focus-visible {
   background: var(--paper);
 }
@@ -688,8 +679,12 @@ body {
   transition: color 140ms ease;
 }
 
-/* Hover darkens. Going lighter would drop contrast below 4.5:1. */
-.prose a:hover,
+/* Links have no underline, so colour alone marks them, and it has to pass
+   two tests (WCAG 1.4.1 and 1.4.3): 4.5:1 against the page, so the link
+   text reads, and 3:1 against the body text around it, so the link can be
+   seen as a link at all. That leaves a narrow band of brightness: a
+   brighter magenta than before in light mode, a deeper one in dark mode
+   (where the body text was also lifted a touch to open the band up). */
 .prose a:focus-visible {
   color: var(--plasma-deep);
 }
@@ -1082,7 +1077,6 @@ mjx-container svg {
   text-decoration: none;
 }
 
-.post-title:hover,
 .post-title:focus-visible {
   color: var(--plasma-deep);
   text-decoration: none;
@@ -1116,7 +1110,6 @@ mjx-container svg {
   box-shadow: 0 0 0 1px var(--rule);
 }
 
-.post-flag:hover,
 .post-flag:focus-visible,
 .post-flag.is-current {
   opacity: 1;
@@ -1161,7 +1154,6 @@ mjx-container svg {
   fill: currentColor;
 }
 
-.contact-link:hover,
 .contact-link:focus-visible {
   color: var(--plasma);
 }
@@ -1263,6 +1255,46 @@ mjx-container svg {
   transform: scaleX(-1) rotate(180deg);
 }
 
+
+/* --- Hover --------------------------------------------------------------------
+   Only where there is a real pointer. A phone fakes :hover on the element you
+   last tapped and keeps it until you tap somewhere else, so a button or link
+   stayed looking "pointed at" after you had used it. Keyboard focus is
+   styled separately (:focus-visible, in each component above). */
+
+@media (hover: hover) {
+  .nav-link:hover {
+    color: var(--ink);
+  }
+
+  .lang-flag:hover .language-flag {
+    opacity: 1;
+    filter: var(--img-filter);
+  }
+
+  .theme-toggle:hover,
+  .dropdown-button:hover {
+    color: var(--ink);
+    border-color: var(--rule);
+  }
+
+  .lang-option:hover {
+    background: var(--paper);
+  }
+
+  .prose a:hover,
+  .post-title:hover {
+    color: var(--plasma-deep);
+  }
+
+  .post-flag:hover {
+    opacity: 1;
+  }
+
+  .contact-link:hover {
+    color: var(--plasma);
+  }
+}
 
 /* --- Pressed states ---------------------------------------------------------
    Hover and focus were covered; :active was not. On a touchscreen there is no
@@ -1377,11 +1409,11 @@ mjx-container svg {
     --paper:       #12161c;
     --panel:       #181d25;
     --ink:         #eef2f7;  /* headings                    16.1:1 */
-    --ink-body:    #d6dde6;  /* running prose               13.3:1 */
+    --ink-body:    #dfe5ed;  /* running prose               14.3:1 */
     --slate:       #98a4b4;  /* secondary text               7.2:1 */
     --rule:        #2b323d;
     --rule-soft:   #212832;
-    --plasma:      #f07fae;  /* links                        7.2:1 */
+    --plasma:      #e73680;  /* links  4.5:1 on paper, 3.2:1 against body text */
     --plasma-deep: #f9a9c8;  /* link hover — lighter here   10.0:1 */
     --glow:        #ff5fa8;  /* focus ring                   6.4:1 */
 
@@ -1402,11 +1434,11 @@ mjx-container svg {
     --paper:       #12161c;
     --panel:       #181d25;
     --ink:         #eef2f7;  /* headings                    16.1:1 */
-    --ink-body:    #d6dde6;  /* running prose               13.3:1 */
+    --ink-body:    #dfe5ed;  /* running prose               14.3:1 */
     --slate:       #98a4b4;  /* secondary text               7.2:1 */
     --rule:        #2b323d;
     --rule-soft:   #212832;
-    --plasma:      #f07fae;  /* links                        7.2:1 */
+    --plasma:      #e73680;  /* links  4.5:1 on paper, 3.2:1 against body text */
     --plasma-deep: #f9a9c8;  /* link hover — lighter here   10.0:1 */
     --glow:        #ff5fa8;  /* focus ring                   6.4:1 */
 
