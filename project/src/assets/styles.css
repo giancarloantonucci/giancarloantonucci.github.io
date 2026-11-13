@@ -773,6 +773,17 @@ mjx-container svg {
   margin-bottom: var(--s2);
 }
 
+.prose .unavailable-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+}
+
+/* .prose img sets height: auto, which would undo the flag's 4:3 box. */
+.prose .unavailable-links .language-flag {
+  height: calc(1.4rem * 0.75);
+}
+
 /* --- CV ------------------------------------------------------------------- */
 
 .prose .cv-profile {

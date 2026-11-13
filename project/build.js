@@ -110,8 +110,15 @@ function unavailableNotice(language, slug) {
   const links = contentLanguages(slug)
     .map(code => {
       const meta = langMeta[code];
+      // Same flag and name as the language menu. The flag is decorative; the
+      // name carries the meaning, and dir sits on the name for the same
+      // reason as in buildLanguageOptions.
+      const flag = meta.flag
+        ? `<img src="../assets/images/flags/${meta.flag}" alt="" class="language-flag"
+            width="28" height="21" loading="lazy" decoding="async" aria-hidden="true">`
+        : '<span class="language-flag is-empty" aria-hidden="true"></span>';
       const dir = meta.dir === 'rtl' ? ' dir="rtl"' : '';
-      return `<li><a href="../${code}/${slug}.html" lang="${meta.tag}" hreflang="${meta.tag}"${dir}>${meta.name}</a></li>`;
+      return `<li><a href="../${code}/${slug}.html" lang="${meta.tag}" hreflang="${meta.tag}">${flag}<span class="lang-name"${dir}>${meta.name}</span></a></li>`;
     })
     .join('\n  ');
   return `<p class="unavailable-note">${strings[language].unavailable}</p>
