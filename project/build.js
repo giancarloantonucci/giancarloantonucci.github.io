@@ -170,6 +170,28 @@ function buildNav(language, currentSlug) {
     .join('\n        ');
 }
 
+// On a wide screen the languages sit in the header as a row of flags; the
+// dropdown is kept for phones, where there is no room for them. Same rule as
+// the dropdown: only languages that have this page. The flag carries no name,
+// so the name goes in aria-label (for screen readers) and title (tooltip).
+function buildLanguageFlags(currentLanguage, slug) {
+  return languages
+    .filter(language => language === currentLanguage || hasContent(language, slug))
+    .map(language => {
+      const meta = langMeta[language];
+      const isCurrent = language === currentLanguage;
+      const classes = isCurrent ? 'lang-flag is-current' : 'lang-flag';
+      const aria = isCurrent ? ' aria-current="true"' : '';
+      const mark = meta.flag
+        ? `<img src="../assets/images/flags/${meta.flag}" alt="" class="language-flag"
+            width="28" height="21" decoding="async" aria-hidden="true">`
+        : `<span class="lang-code" aria-hidden="true">${language}</span>`;
+      return `<a class="${classes}"${aria} lang="${meta.tag}" hreflang="${meta.tag}"
+          href="../${language}/${slug}.html" aria-label="${meta.name}" title="${meta.name}">${mark}</a>`;
+    })
+    .join('\n        ');
+}
+
 // A language option is only shown when that page really exists in that language.
 function buildLanguageOptions(currentLanguage, slug) {
   return languages
@@ -708,6 +730,7 @@ pageSlugs().forEach(slug => {
         alternates: buildAlternates(slug),
         nav: buildNav(language, data.post ? 'notebook' : slug),
         languageOptions: buildLanguageOptions(language, slug),
+        languageFlags: buildLanguageFlags(language, slug),
         switchLabel: strings[language].switchLabel,
         themeLabel: strings[language].themeLabel,
         skip: strings[language].skip,
@@ -757,6 +780,7 @@ if (cv) {
       alternates: buildAlternates('cv'),
       nav: buildNav(language, 'cv'),
       languageOptions: buildLanguageOptions(language, 'cv'),
+      languageFlags: buildLanguageFlags(language, 'cv'),
       switchLabel: t.switchLabel,
       themeLabel: t.themeLabel,
       skip: t.skip,
