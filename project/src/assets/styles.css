@@ -204,9 +204,17 @@
   box-sizing: border-box;
 }
 
+/* On large screens everything grows with the window. Sizes across the site
+   are in rem, so raising the root size scales text, column, photo and
+   header together. The column stays the same number of characters wide,
+   about 80, the most that still reads comfortably, so the side margins
+   shrink rather than the lines getting longer. Up to about 1100px wide this
+   is the reader's own default size (1rem); it then rises to 1.25 times
+   that by about 1700px. */
 html {
   -webkit-text-size-adjust: 100%;
   color-scheme: light dark;
+  font-size: clamp(1rem, 0.25rem + 0.95vw, 1.25rem);
 }
 
 /* The body is a column: navbar, content, footer. The content takes up any
