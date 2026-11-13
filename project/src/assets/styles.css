@@ -167,9 +167,18 @@ html {
   color-scheme: light dark;
 }
 
+/* The body is a column: navbar, content, footer. The content takes up any
+   spare height, so on a short page the footer still sits at the foot of the
+   screen rather than halfway up it. dvh tracks a phone's collapsing address
+   bar; vh is the fallback for browsers that predate it. */
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;  /* :active styles below give the feedback */
   background: var(--paper);
   color: var(--ink-body);
   font-family: var(--font-text);
@@ -182,10 +191,14 @@ body {
 
 /* --- Skip link ----------------------------------------------------------- */
 
+/* Hidden by lifting it above the top of the page rather than pushing it far
+   to one side: -9999px "inline-start" is to the RIGHT in Arabic, which widens
+   the page there. */
 .skip-link {
   position: absolute;
-  inset-inline-start: -9999px;
-  inset-block-start: 0;
+  inset-inline-start: var(--s2);
+  inset-block-start: var(--s2);
+  transform: translateY(-200%);
   z-index: 100;
   padding: var(--s2) var(--s4);
   background: var(--ink);
@@ -197,8 +210,7 @@ body {
 }
 
 .skip-link:focus {
-  inset-inline-start: var(--s2);
-  inset-block-start: var(--s2);
+  transform: none;
 }
 
 /* --- Navigation ---------------------------------------------------------- */
@@ -408,6 +420,8 @@ body {
 /* --- Layout -------------------------------------------------------------- */
 
 .content-wrapper {
+  flex: 1 0 auto;
+  width: 100%;   /* a flex item with auto margins would otherwise shrink to fit */
   max-width: calc(var(--measure) + var(--s6));
   margin: 0 auto;
   padding: var(--s7) var(--s4) var(--s8);
@@ -894,7 +908,9 @@ mjx-container svg {
 
 /* --- Post index ----------------------------------------------------------- */
 
-.post-list {
+/* .prose ul would otherwise win on specificity and indent the list. */
+.post-list,
+.prose .post-list {
   margin: 0 0 var(--s6);
   padding: 0;
   list-style: none;
@@ -932,7 +948,11 @@ mjx-container svg {
 
 .post-flag {
   display: inline-flex;
-  padding: 2px;
+  align-items: center;
+  justify-content: center;
+  /* The flag is 15px wide; the box around it is what a finger has to hit. */
+  min-width: 1.5rem;
+  min-height: 1.5rem;
   border-radius: var(--radius-sm);
   opacity: 0.45;
   transition: opacity 140ms ease;
@@ -1000,10 +1020,14 @@ mjx-container svg {
 
 /* --- Footer --------------------------------------------------------------- */
 
+/* The rule runs the full width of the screen, like the navbar's; the text
+   inside lines up with the column above. (100% - measure) / 2 is exactly
+   where .content starts once the screen is wider than the column, and
+   --s4 is where it starts below that. */
 .site-footer {
-  max-width: calc(var(--measure) + var(--s6));
-  margin: 0 auto;
-  padding: var(--s4) var(--s4) var(--s7);
+  width: 100%;
+  padding-block: var(--s4) calc(var(--s7) + env(safe-area-inset-bottom, 0px));
+  padding-inline: max(var(--s4), (100% - var(--measure)) / 2);
   border-top: 1px solid var(--rule);
   color: var(--slate);
   font-family: var(--font-label);
@@ -1154,15 +1178,41 @@ mjx-container svg {
     line-height: 1.68;
   }
 
+  /* Two rows on a phone. Five links plus the theme and language buttons do
+     not fit one row at a readable size: in Sicilian they need 410px, and
+     the old one-row bar hid the last links off the edge, with nothing to say
+     they were there. So the buttons get a short row of their own and the
+     links get the full width beneath them. The bar no longer follows the
+     reader down the page; at two rows it would take an eighth of the screen.
+     The links' outer padding is pulled back by a negative margin so that the
+     first and last words line up with the text below. */
   .navbar {
-    min-height: 3.25rem;
-    padding: 0 var(--s3);
+    position: static;
+    flex-wrap: wrap;
+    min-height: 0;
+    padding: var(--s1) var(--s4) 0;
+    gap: 0;
+  }
+
+  .nav-tools {
+    order: -1;
+    margin-inline-start: auto;
+    margin-inline-end: calc(-1 * var(--s2));
+  }
+
+  .nav-links {
+    flex: 1 0 100%;
+    justify-content: space-between;
+    margin-inline: calc(-1 * var(--s1));
+    overflow-x: visible;
+    flex-wrap: wrap;   /* a last resort for a long language not yet added */
   }
 
   .nav-link {
-    /* Five links have to fit a 390px phone without scrolling. */
     padding: var(--s3) var(--s1);
-    font-size: 0.78rem;
+    /* 13px on a 320px phone, where Sicilian just fits; up to 14.4px on
+       wider ones. */
+    font-size: clamp(0.8125rem, 3.6vw, 0.9rem);
   }
 
   .masthead {
