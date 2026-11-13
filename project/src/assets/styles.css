@@ -1178,41 +1178,23 @@ mjx-container svg {
     line-height: 1.68;
   }
 
-  /* Two rows on a phone. Five links plus the theme and language buttons do
-     not fit one row at a readable size: in Sicilian they need 410px, and
-     the old one-row bar hid the last links off the edge, with nothing to say
-     they were there. So the buttons get a short row of their own and the
-     links get the full width beneath them. The bar no longer follows the
-     reader down the page; at two rows it would take an eighth of the screen.
-     The links' outer padding is pulled back by a negative margin so that the
-     first and last words line up with the text below. */
+  /* One row, as on desktop. The bar's side padding is halved so that the
+     first link's text, inside its own padding, lines up with the page text
+     below. Sicilian, the longest, fits a 320px phone with room to spare;
+     should a future language not, the links scroll sideways rather than
+     spill. */
   .navbar {
-    position: static;
-    flex-wrap: wrap;
-    min-height: 0;
-    padding: var(--s1) var(--s4) 0;
-    gap: 0;
-  }
-
-  .nav-tools {
-    order: -1;
-    margin-inline-start: auto;
-    margin-inline-end: calc(-1 * var(--s2));
-  }
-
-  .nav-links {
-    flex: 1 0 100%;
-    justify-content: space-between;
-    margin-inline: calc(-1 * var(--s1));
-    overflow-x: visible;
-    flex-wrap: wrap;   /* a last resort for a long language not yet added */
+    min-height: 3.25rem;
+    padding: 0 var(--s2);
   }
 
   .nav-link {
-    padding: var(--s3) var(--s1);
-    /* 13px on a 320px phone, where Sicilian just fits; up to 14.4px on
-       wider ones. */
-    font-size: clamp(0.8125rem, 3.6vw, 0.9rem);
+    padding: var(--s3) var(--s2);
+    font-size: clamp(0.8125rem, 4vw, 0.86rem);
+  }
+
+  .dropdown-button {
+    padding-inline: var(--s2);
   }
 
   .masthead {

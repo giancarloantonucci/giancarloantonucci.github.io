@@ -19,8 +19,6 @@ defaultLanguage: en
 # in every language. Every entry needs a label under `nav` in ui.yml.
 nav:
   - index
-  - research
-  - collaborations
   - cv
   - notebook
 

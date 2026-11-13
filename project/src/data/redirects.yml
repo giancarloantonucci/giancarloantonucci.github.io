@@ -16,6 +16,24 @@
 - from: website/
   to: en/index.html
 
+# Research and Industry were folded into the home page in November 2026.
+- from: en/research.html
+  to: en/index.html
+- from: it/research.html
+  to: it/index.html
+- from: scn/research.html
+  to: scn/index.html
+- from: pms/research.html
+  to: pms/index.html
+- from: en/collaborations.html
+  to: en/index.html
+- from: it/collaborations.html
+  to: it/index.html
+- from: scn/collaborations.html
+  to: scn/index.html
+- from: pms/collaborations.html
+  to: pms/index.html
+
 # Examples for the old flat URLs, if you want them:
 # - from: cv.html
 #   to: en/cv.html

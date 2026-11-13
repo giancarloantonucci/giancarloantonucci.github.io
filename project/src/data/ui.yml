@@ -11,11 +11,9 @@
 # ───────────────────────────────────────────────  English  ·  en  ·  en
 en:
 
-  # the five nav slots
+  # the nav slots
   nav:
     index: Home
-    research: Research
-    collaborations: Industry
     cv: CV
     notebook: Notebook
 
@@ -62,8 +60,6 @@ zh:
 
   nav:
     index: 首页
-    research: 研究
-    collaborations: 产业
     cv: 简历
     notebook: 笔记
 
@@ -106,8 +102,6 @@ es:
 
   nav:
     index: Inicio
-    research: Investigación
-    collaborations: Industria
     cv: CV
     notebook: Cuaderno
 
@@ -150,8 +144,6 @@ ar:
 
   nav:
     index: الرئيسية
-    research: البحث
-    collaborations: الصناعة
     cv: السيرة الذاتية
     notebook: المفكرة
 
@@ -194,8 +186,6 @@ ja:
 
   nav:
     index: ホーム
-    research: 研究
-    collaborations: 産業
     cv: 履歴
     notebook: ノート
 
@@ -238,8 +228,6 @@ sw:
 
   nav:
     index: Mwanzo
-    research: Utafiti
-    collaborations: Viwanda
     cv: Wasifu
     notebook: Daftari
 
@@ -282,8 +270,6 @@ el:
 
   nav:
     index: Αρχική
-    research: Έρευνα
-    collaborations: Βιομηχανία
     cv: Βιογραφικό
     notebook: Σημειωματάριο
 
@@ -326,8 +312,6 @@ it:
 
   nav:
     index: Inizio
-    research: Ricerca
-    collaborations: Industria
     cv: CV
     notebook: Quaderno
 
@@ -370,8 +354,6 @@ scn:
 
   nav:
     index: Accuminciu
-    research: Ricerca
-    collaborations: Industria
     cv: CV
     notebook: Pitazzu
 
@@ -414,8 +396,6 @@ mt:
 
   nav:
     index: Ewwel paġna
-    research: Riċerka
-    collaborations: Industrija
     cv: CV
     notebook: Ktieb tan-noti
 
@@ -459,8 +439,6 @@ pms:
 
   nav:
     index: Comens
-    research: Arsërca
-    collaborations: Industria
     cv: CV
     notebook: Scartari
 
@@ -504,8 +482,6 @@ itg:
 
   nav:
     index: Home
-    research: Research
-    collaborations: Industry
     cv: CV
     notebook: Notebook
 
