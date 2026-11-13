@@ -1020,10 +1020,10 @@ mjx-container svg {
   display: inline-flex;
   align-items: center;
   gap: var(--s2);
+  min-height: 1.5rem;   /* a 24px target for a finger */
   color: var(--slate);
-  font-family: var(--font-label);
-  font-variant-caps: all-small-caps;
-  font-size: 0.94rem;
+  font-family: var(--font-meta);
+  font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   text-decoration: none;
