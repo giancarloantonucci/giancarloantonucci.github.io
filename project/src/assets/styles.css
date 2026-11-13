@@ -441,10 +441,6 @@ body {
   border: 1px solid transparent;
   border-radius: var(--radius);
   color: var(--slate);
-  font-family: var(--font-meta);
-  font-size: 0.76rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   cursor: pointer;
   transition: border-color 140ms ease, color 140ms ease;
 }
@@ -469,7 +465,6 @@ body {
   position: absolute;
   inset-inline-end: 0;
   inset-block-start: calc(100% + var(--s2));
-  min-width: 11rem;
   max-height: 70vh;
   overflow-y: auto;
   padding: var(--s1);
@@ -480,35 +475,41 @@ body {
   display: none;
 }
 
+/* Flags only, four to a row, all in full colour: on a phone there is no
+   pointer to bring a faded flag up, so fading would only make the others
+   look disabled. The bar marks the current one. A grid keeps the menu
+   compact as languages are added. */
 .dropdown-content.is-open {
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: var(--s1);
 }
 
 .lang-option {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--s2);
-  padding: var(--s2) var(--s3);
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;   /* a full 44px target: this is the phone menu */
   border-radius: var(--radius);
   color: var(--slate);
-  font-size: 0.98rem;
   text-decoration: none;
 }
 
 .lang-option:hover,
 .lang-option:focus-visible {
   background: var(--paper);
-  color: var(--ink);
 }
 
-.lang-name {
-  /* Keeps a right-to-left name from reordering anything around it. */
-  unicode-bidi: isolate;
-}
-
-.lang-option.is-current {
-  color: var(--ink);
-  font-weight: 600;
+.lang-option.is-current::after {
+  content: '';
+  position: absolute;
+  inset-inline: var(--s2);
+  bottom: 0.3rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--ink);
 }
 
 .language-flag {
@@ -522,6 +523,12 @@ body {
 }
 
 /* Languages with no flag keep the names aligned with those that have one. */
+/* On the "not available in this language" pages. Keeps a right-to-left
+   name from reordering anything around it. */
+.lang-name {
+  unicode-bidi: isolate;
+}
+
 .language-flag.is-empty {
   display: inline-block;
   width: 1.4rem;

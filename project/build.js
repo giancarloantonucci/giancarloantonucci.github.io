@@ -170,6 +170,16 @@ function buildNav(language, currentSlug) {
     .join('\n        ');
 }
 
+// A language's flag, or its code where languages.yml gives no flag. Always
+// decorative: the link around it carries the name.
+function flagMark(language) {
+  const meta = langMeta[language];
+  return meta.flag
+    ? `<img src="../assets/images/flags/${meta.flag}" alt="" class="language-flag"
+            width="28" height="21" decoding="async" aria-hidden="true">`
+    : `<span class="lang-code" aria-hidden="true">${language}</span>`;
+}
+
 // On a wide screen the languages sit in the header as a row of flags; the
 // dropdown is kept for phones, where there is no room for them. Same rule as
 // the dropdown: only languages that have this page. The flag carries no name,
@@ -182,12 +192,8 @@ function buildLanguageFlags(currentLanguage, slug) {
       const isCurrent = language === currentLanguage;
       const classes = isCurrent ? 'lang-flag is-current' : 'lang-flag';
       const aria = isCurrent ? ' aria-current="true"' : '';
-      const mark = meta.flag
-        ? `<img src="../assets/images/flags/${meta.flag}" alt="" class="language-flag"
-            width="28" height="21" decoding="async" aria-hidden="true">`
-        : `<span class="lang-code" aria-hidden="true">${language}</span>`;
       return `<a class="${classes}"${aria} lang="${meta.tag}" hreflang="${meta.tag}"
-          href="../${language}/${slug}.html" aria-label="${meta.name}" title="${meta.name}">${mark}</a>`;
+          href="../${language}/${slug}.html" aria-label="${meta.name}" title="${meta.name}">${flagMark(language)}</a>`;
     })
     .join('\n        ');
 }
@@ -201,19 +207,10 @@ function buildLanguageOptions(currentLanguage, slug) {
       const isCurrent = language === currentLanguage;
       const classes = isCurrent ? 'lang-option is-current' : 'lang-option';
       const aria = isCurrent ? ' aria-current="true"' : '';
-      // The flag is decorative — the name carries the meaning, so alt is empty
-      // and a language without a flag simply shows its name.
-      const flag = meta.flag
-        ? `<img src="../assets/images/flags/${meta.flag}" alt="" class="language-flag"
-            width="28" height="21" loading="lazy" decoding="async" aria-hidden="true">`
-        : '<span class="language-flag is-empty" aria-hidden="true"></span>';
-      // dir goes on the name, not the row. On the row it would reverse the
-      // flex order, throwing the Arabic flag to the opposite side of the
-      // column. On the span it only does what it should: lay the Arabic
-      // glyphs out right-to-left within their own box.
-      const dir = meta.dir === 'rtl' ? ' dir="rtl"' : '';
+      // Flags only, as in the desktop row; the name is the tooltip and the
+      // accessible name.
       return `<a class="${classes}"${aria} lang="${meta.tag}" hreflang="${meta.tag}"
-          href="../${language}/${slug}.html">${flag}<span class="lang-name"${dir}>${meta.name}</span></a>`;
+          href="../${language}/${slug}.html" aria-label="${meta.name}" title="${meta.name}">${flagMark(language)}</a>`;
     })
     .join('\n        ');
 }
@@ -719,6 +716,7 @@ pageSlugs().forEach(slug => {
       slug === 'index' ? 'index-template.html' : 'page-template.html',
       {
         language,
+        currentFlag: flagMark(language),
         langTag: langMeta[language].tag,
         dir: langMeta[language].dir || 'ltr',
         title,
@@ -771,6 +769,7 @@ if (cv) {
 
     const html = render('page-template.html', {
       language,
+      currentFlag: flagMark(language),
       langTag: langMeta[language].tag,
       dir: langMeta[language].dir || 'ltr',
       title: t.cvTitle,

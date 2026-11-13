@@ -35,8 +35,8 @@
         {{languageFlags}}
     </nav>
     <div class="dropdown">
-      <button class="dropdown-button" type="button" aria-expanded="false" aria-controls="language-selector">
-        <span>{{language}}</span>
+      <button class="dropdown-button" type="button" aria-expanded="false" aria-controls="language-selector" aria-label="{{switchLabel}}" title="{{switchLabel}}">
+        {{currentFlag}}
         <svg class="caret" viewBox="0 0 10 6" aria-hidden="true"><path d="M0 0l5 6 5-6z" fill="currentColor"/></svg>
       </button>
       <div id="language-selector" class="dropdown-content" role="menu" aria-label="{{switchLabel}}">
